@@ -6,8 +6,8 @@ export async function GET() {
   const { getUser } = getKindeServerSession();
   const user = await getUser();
 
-  if (!user || user === null || !user.id) {
-    throw new Error("資料錯誤");
+  if (!user || !user.id) {
+    return NextResponse.json({ error: "未找到使用者" }, { status: 401 });
   }
 
   let dbUser = await db?.user.findUnique({
@@ -28,5 +28,7 @@ export async function GET() {
     });
   }
 
-  return NextResponse.redirect("http://localhost:3000");
+  return NextResponse.redirect(
+    new URL(process.env.NEXT_PUBLIC_APP_URL ?? "http://localhost:3000")
+  );
 }
