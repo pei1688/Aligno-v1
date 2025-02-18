@@ -7,10 +7,13 @@ import { Separator } from "@/components/ui/separator";
 const UserPage = async () => {
   const { getUser } = getKindeServerSession();
   const user = await getUser();
+  if (!user) {
+    return <p>請登入後查看用戶資料</p>;
+  }
 
   const userData = await db.user.findUnique({
     where: {
-      id: user.id,
+      id: user?.id,
     },
     select: { firstName: true, lastName: true },
   });
