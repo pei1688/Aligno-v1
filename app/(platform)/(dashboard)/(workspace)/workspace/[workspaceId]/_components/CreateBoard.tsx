@@ -22,7 +22,7 @@ const CreateBoard = ({
 
   return (
     <FormPopover
-      sideOffset={-200}
+      sideOffset={isMobile ? -200 : 5}
       side={isMobile ? "bottom" : "right"}
       workspaces={workspaces}
       userName={user.given_name}
