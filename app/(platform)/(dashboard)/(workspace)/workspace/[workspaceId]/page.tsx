@@ -11,10 +11,10 @@ const WorkspaceIdPage = async ({
 }: {
   params: { workspaceId: string };
 }) => {
-  // 只查詢一次，避免 `BoardList` 內部重複查詢
+  // 只查詢一次，避免 BoardList 內部重複查詢
   const workspaces = await db.workspace.findMany();
 
-  // 從已查詢的 `workspaces` 找到當前的 `workspace`
+  // 從已查詢的 workspaces 找到當前的 workspace
   const workspace = workspaces.find((w) => w.id === params.workspaceId);
 
   if (!workspace) {
@@ -47,4 +47,4 @@ const WorkspaceIdPage = async ({
   );
 };
 
-export default WorkspaceIdPage;
+export default WorkspaceIdPage

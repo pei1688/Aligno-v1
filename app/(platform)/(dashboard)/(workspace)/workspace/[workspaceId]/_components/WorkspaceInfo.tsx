@@ -1,4 +1,3 @@
-"use client";
 import { CreditCard } from "lucide-react";
 import Image from "next/image";
 

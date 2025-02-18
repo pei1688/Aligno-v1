@@ -39,7 +39,7 @@ const Sidebar = ({
   user: UserProps;
   workspaces: WorkspaceProps[];
 }) => {
-  const [isCollapsed, setIsCollapsed] = useState(false);
+  const [isCollapsed, setIsCollapsed] = useState(true);
 
   const links = [
     {
