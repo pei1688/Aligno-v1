@@ -1,3 +1,7 @@
+"use client"
+import { Button } from "@/components/ui/button";
+import { LoginLink } from "@kinde-oss/kinde-auth-nextjs";
+
 const GuestPage = () => {
   return (
     <div className=" text-aligno-200">
@@ -8,9 +12,9 @@ const GuestPage = () => {
         <p className="mt-4 text-lg text-gray-200">
           讓你的團隊協作更加順暢，專案管理更加輕鬆
         </p>
-        <button className="mt-6 px-6 py-3 bg-white text-aligno-600 font-bold rounded-full shadow-lg">
-          開始免費試用
-        </button>
+        <Button variant="transparent"  className="mt-6 px-6 py-3 bg-aligno-200 hover:bg-aligno-200/80 text-aligno-600 font-bold rounded-full shadow-lg">
+          <LoginLink>開始免費試用</LoginLink>
+        </Button>
       </header>
 
       {/* 介紹文 */}

@@ -5,7 +5,7 @@ import Image from "next/image";
 
 const Navbar = async () => {
   return (
-    <nav className="h-[3rem] px-4 flex items-center w-full justify-between bg-aligno-800">
+    <nav className="h-[3rem] flex items-center w-full justify-between bg-aligno-700 px-[750px]">
       <Link href="/" className="text-2xl flex items-center gap-4">
         <Image src={"/logo.svg"} alt="logo" width={35} height={35} />
         <h1 className="font-semibold">ALIGNO</h1>
