@@ -28,7 +28,6 @@ const BoardCard = ({ board }: BoardCardProps) => {
         toast.error(res.error);
         return;
       }
-      toast.success(`已${res.data ? "加入" : "移除"}收藏`);
     });
   };
 

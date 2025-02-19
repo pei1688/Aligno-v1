@@ -4,26 +4,31 @@ import { toggleFavorite } from "@/aciotns/board/toggleFavorite";
 import { Star } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { useTransition } from "react";
+import { useOptimistic, useTransition } from "react";
 import { toast } from "sonner";
 
 interface FavorBoardItem {
   id: string;
   title: string;
   image: string;
+  isFavorite: boolean;
 }
 
-const FavorBoardItem = ({ id, title, image }: FavorBoardItem) => {
+const FavorBoardItem = ({ id, title, image, isFavorite }: FavorBoardItem) => {
   const [isPending, startTransition] = useTransition();
+  const [optimisticFavorite, toggleOptimisticFavorite] = useOptimistic(
+    isFavorite,
+    (curr, action: boolean) => action
+  );
   const handleToggleFavorite = async () => {
+    toggleOptimisticFavorite(!optimisticFavorite);
     startTransition(async () => {
       const res = await toggleFavorite(id);
       if (res.error) {
+        toggleOptimisticFavorite(optimisticFavorite);
         toast.error(res.error);
         return;
       }
-
-      toast.success(`已${res.data ? "加入" : "移除"}收藏`);
     });
   };
   return (

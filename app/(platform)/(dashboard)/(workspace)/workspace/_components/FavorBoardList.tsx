@@ -6,7 +6,7 @@ const FavorBoardList = async () => {
     where: {
       isFavorites: true,
     },
-    select: { id: true, title: true, imageThumbUrl: true },
+    select: { id: true, title: true, imageThumbUrl: true, isFavorites: true },
   });
   return (
     <>
@@ -18,6 +18,7 @@ const FavorBoardList = async () => {
               id={board.id}
               title={board.title}
               image={board.imageThumbUrl}
+              isFavorite={board.isFavorites}
             />
           ))}
         </div>
