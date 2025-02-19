@@ -21,8 +21,8 @@ const FavorBoardItem = ({ id, title, image, isFavorite }: FavorBoardItem) => {
     (curr, action: boolean) => action
   );
   const handleToggleFavorite = async () => {
-    toggleOptimisticFavorite(!optimisticFavorite);
     startTransition(async () => {
+      toggleOptimisticFavorite(!optimisticFavorite);
       const res = await toggleFavorite(id);
       if (res.error) {
         toggleOptimisticFavorite(optimisticFavorite);

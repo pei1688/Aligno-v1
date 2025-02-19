@@ -1,8 +1,8 @@
-import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
+import { Suspense } from "react";
 import { redirect } from "next/navigation";
+import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import WorkspaceList from "./_components/WorkspaceList";
 import { Separator } from "@/components/ui/separator";
-import { Suspense } from "react";
 import Spinner from "@/components/Spinner";
 import CreateWorkspace from "./_components/CreateWorkspace";
 import FavorBoardList from "./_components/FavorBoardList";
@@ -35,7 +35,7 @@ const WorkspacePage = async () => {
             收藏的看板
           </h2>
           <Suspense fallback={<Spinner />}>
-            <FavorBoardList />
+            <FavorBoardList id={user.id} />
           </Suspense>
         </div>
       </div>

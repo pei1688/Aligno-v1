@@ -1,5 +1,3 @@
-import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
-import { redirect } from "next/navigation";
 import db from "@/lib/db";
 import Sidebar from "../../_components/Sidebar";
 import { startCase } from "lodash";
@@ -26,37 +24,12 @@ const WorkspaceIdLayout = async ({
   children: React.ReactNode;
   params: { workspaceId: string };
 }) => {
-  const { getUser } = getKindeServerSession();
-  const  user = await getUser();
-  if (!user) {
-    redirect("/");
-  }
 
-  // 同時查詢 workspace 和 workspaces
-  const [workspace, workspaces] = await Promise.all([
-    db.workspace.findUnique({
-      where: { id: params.workspaceId },
-      include: {
-        boards: { select: { id: true, title: true, imageThumbUrl: true } },
-      },
-    }),
-    db.workspace.findMany({
-      where: { userId: user.id },
-    }),
-  ]);
-
-  if (!workspace) {
-    redirect("/");
-  }
 
   return (
     <div className="flex gap-x-7">
       <div className="">
-        <Sidebar
-          workspace={workspace}
-          workspaces={workspaces}
-          user={{ ...user, given_name: user.given_name! }}
-        />
+        <Sidebar workspaceId={params.workspaceId} />
       </div>
       <div className="flex-1 md:flex-[3] lg:flex-[4]">{children}</div>
     </div>

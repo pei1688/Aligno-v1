@@ -1,7 +1,13 @@
-import { Ellipsis } from "lucide-react";
+import Image from "next/image";
 const Spinner = () => {
   return (
-    <Ellipsis className=" animate-ping text-aligno-200 flex justify-center " />
+    <Image
+      src="/spinner.svg"
+      alt="spinner"
+      width={20}
+      height={20}
+      className="flex justify-center text-aligno-200"
+    />
   );
 };
 

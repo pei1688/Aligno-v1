@@ -19,7 +19,7 @@ const Navbar = async () => {
 
   
   return (
-    <nav className="h-[3rem] px-4 flex items-center w-full justify-between bg-aligno-700">
+    <nav className="h-[3rem] px-4 flex items-center w-full justify-between bg-aligno-800">
       <NavItem workspaces={workspaces} user={user} />
     </nav>
   );

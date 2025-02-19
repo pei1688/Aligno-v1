@@ -1,18 +1,35 @@
 import db from "@/lib/db";
 import FavorBoardItem from "./FavorBoardItem";
 
-const FavorBoardList = async () => {
-  const favorBoard = await db.board.findMany({
+interface User {
+  id: string;
+}
+
+const FavorBoardList = async ({ id }: User) => {
+  const workspaces = await db.workspace.findMany({
     where: {
-      isFavorites: true,
+      userId: id,
     },
-    select: { id: true, title: true, imageThumbUrl: true, isFavorites: true },
+    include: {
+      boards: {
+        select: {
+          id: true,
+          title: true,
+          imageThumbUrl: true,
+          isFavorites: true,
+        },
+      },
+    },
   });
+  // 將所有 workspace 的收藏看板展開成單一陣列，只保留 isFavorites 為 true 的項目
+  const favorBoards = workspaces
+    .flatMap((workspace) => workspace.boards)
+    .filter((board) => board.isFavorites);
   return (
     <>
-      {favorBoard.length > 0 ? (
+      {favorBoards.length > 0 ? (
         <div className="flex w-full flex-wrap gap-4">
-          {favorBoard.map((board) => (
+          {favorBoards.map((board) => (
             <FavorBoardItem
               key={board.id}
               id={board.id}
@@ -23,7 +40,7 @@ const FavorBoardList = async () => {
           ))}
         </div>
       ) : (
-        <p className="text-sm text-aligno-300">沒有已收藏的看板</p>
+        <p className="text-sm text-aligno-300 px-2">沒有收藏的看板</p>
       )}
     </>
   );

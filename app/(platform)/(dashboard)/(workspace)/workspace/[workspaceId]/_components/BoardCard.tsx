@@ -20,8 +20,8 @@ const BoardCard = ({ board }: BoardCardProps) => {
   );
 
   const handleToggleFavorite = async () => {
-    toggleOptimisticFavorite(!optimisticFavorite);
     startTransition(async () => {
+      toggleOptimisticFavorite(!optimisticFavorite);
       const res = await toggleFavorite(board.id);
       if (res.error) {
         toggleOptimisticFavorite(optimisticFavorite);
