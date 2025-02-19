@@ -16,7 +16,16 @@ const PlatFormLayout = async ({ children }: { children: React.ReactNode }) => {
     <main>
       <QueryProvider>
         <CardModalProvider />
-        <Toaster position="bottom-right" />
+        <Toaster
+          position="bottom-right"
+          toastOptions={{
+            style: {
+              background: "#222222",
+              border: "#222222",
+              color: "#F1F1F1",
+            },
+          }}
+        />
         {children}
       </QueryProvider>
     </main>
