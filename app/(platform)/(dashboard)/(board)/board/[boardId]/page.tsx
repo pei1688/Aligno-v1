@@ -8,7 +8,6 @@ interface BoardIdProps {
 }
 
 const BoardIdPage = async ({ params }: BoardIdProps) => {
-  // 一次查詢 board，包含 workspaceId 和 lists
   const lists = await db.list.findMany({
     where: {
       boardId: params.boardId,

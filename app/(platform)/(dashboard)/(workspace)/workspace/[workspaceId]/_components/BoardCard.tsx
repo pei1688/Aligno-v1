@@ -19,7 +19,8 @@ const BoardCard = ({ board }: BoardCardProps) => {
     (curr, action: boolean) => action
   );
 
-  const handleToggleFavorite = async () => {
+  const handleToggleFavorite = async (e: React.MouseEvent) => {
+    e.preventDefault(); // 防止點擊 Star 時跳轉
     startTransition(async () => {
       toggleOptimisticFavorite(!optimisticFavorite);
       const res = await toggleFavorite(board.id);
@@ -40,13 +41,7 @@ const BoardCard = ({ board }: BoardCardProps) => {
     >
       <div className="absolute inset-0 transition bg-black/30 group-hover:bg-black/40" />
       <p className="relative font-semibold text-aligno-200">{board.title}</p>
-      <button
-        onClick={(e) => {
-          e.preventDefault(); // 防止點擊 Star 時跳轉
-          handleToggleFavorite();
-        }}
-        disabled={isPending}
-      >
+      <button onClick={handleToggleFavorite} disabled={isPending}>
         <Star
           className={`h-4 w-4 absolute bottom-2 right-2 text-yellow-400 hover:scale-110 transition  ${
             optimisticFavorite

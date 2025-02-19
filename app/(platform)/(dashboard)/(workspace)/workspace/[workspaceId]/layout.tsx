@@ -24,13 +24,9 @@ const WorkspaceIdLayout = async ({
   children: React.ReactNode;
   params: { workspaceId: string };
 }) => {
-
-
   return (
     <div className="flex gap-x-7">
-      <div className="">
-        <Sidebar workspaceId={params.workspaceId} />
-      </div>
+      <Sidebar workspaceId={params.workspaceId} />
       <div className="flex-1 md:flex-[3] lg:flex-[4]">{children}</div>
     </div>
   );

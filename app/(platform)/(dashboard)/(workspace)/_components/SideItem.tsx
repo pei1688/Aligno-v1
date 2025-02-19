@@ -16,6 +16,7 @@ import FormPopover from "@/components/form/FormPopover";
 interface BoardProps {
   id: string;
   title: string;
+  isFavorites: boolean;
   imageThumbUrl: string;
 }
 interface WorkspaceProps {
@@ -37,8 +38,7 @@ interface SidebarClientProps {
 }
 
 const SideItem = ({ workspace, workspaces, user }: SidebarClientProps) => {
-  const [isCollapsed, setIsCollapsed] = useState(false);
-
+  const [isCollapsed, setIsCollapsed] = useState(true);
   const links = [
     {
       href: `/workspace/${workspace.id}`,
@@ -61,27 +61,35 @@ const SideItem = ({ workspace, workspaces, user }: SidebarClientProps) => {
   ];
   return (
     <div
-      className={`h-[calc(100vh-3rem)] bg-aligno-700/50 relative w-64 shrink-0  flex flex-col transition-all duration-100 ${
+      className={`h-[calc(100vh-3rem)] bg-aligno-700/90 relative w-64 shrink-0  flex flex-col transition-all duration-100 ${
         isCollapsed ? "w-8" : "w-64"
       }`}
     >
       {/* 收合按鈕 */}
-      <Button
-        className="absolute top-2 right-[-16px] bg-aligno-700 hover:bg-aligno-600 rounded-full p-1 shadow-md transition-all border border-aligno-300/70"
-        onClick={() => setIsCollapsed(!isCollapsed)}
-        size="none"
-      >
-        {isCollapsed ? (
+      {isCollapsed ? (
+        <Button
+          className="absolute top-2 right-[-16px] bg-aligno-700 hover:bg-aligno-600 rounded-full p-1 shadow-md transition-all border border-aligno-300/70"
+          onClick={() => setIsCollapsed(!isCollapsed)}
+          size="none"
+        >
           <ChevronRight className="w-8 h-5 " />
-        ) : (
-          <ChevronLeft className="w-5 h-5" />
-        )}
-      </Button>
-
+        </Button>
+      ) : (
+        <div className="flex items-center justify-between">
+          <h1 className="px-4 py-2 text-lg font-semibold">{workspace.title}</h1>
+          <Button
+            onClick={() => setIsCollapsed(!isCollapsed)}
+            variant="transparent"
+            size="none"
+            className="p-2 mr-2"
+          >
+            <ChevronLeft className="w-5 h-5 " />
+          </Button>
+        </div>
+      )}
       {/* 標題 */}
       {!isCollapsed && (
         <>
-          <h1 className="px-4 py-2 text-lg font-semibold">{workspace.title}</h1>
           <Separator className="mb-8 border-aligno-400/50 border-t-[0.5px] border-solid" />
           {/* 選單連結 */}
           {links.map((link) => (
@@ -121,15 +129,17 @@ const SideItem = ({ workspace, workspaces, user }: SidebarClientProps) => {
               ? workspace.boards.map((board) => (
                   <SideLink
                     key={board.id}
+                    id={board.id}
                     href={`/board/${board.id}`}
                     icon={!board.imageThumbUrl ? LayoutDashboard : undefined}
                     imageSrc={board.imageThumbUrl || undefined}
                     label={isCollapsed ? "" : board.title}
                     path={`/board/${board.id}`}
+                    isFavorite={board.isFavorites}
                   />
                 ))
               : !isCollapsed && (
-                  <p className="text-sm text-neutral-400 px-2">尚無看板</p>
+                  <p className="text-sm text-aligno-300 px-2">尚無看板</p>
                 )}
           </div>
         )}

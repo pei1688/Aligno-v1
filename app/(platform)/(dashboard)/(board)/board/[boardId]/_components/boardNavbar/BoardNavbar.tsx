@@ -14,7 +14,7 @@ interface BoardNavbarProps {
   workspaceId: string;
 }
 
-const BoadrNavbar = async ({ title, id, workspaceId }: BoardNavbarProps) => {
+const BoardNavbar = async ({ title, id, workspaceId }: BoardNavbarProps) => {
   return (
     <div className="w-full h-14 z-[40] bg-aligno-800/50 fixed top-12 flex items-center px-6 gpa-x-4 text-aligno-200">
       <BoardTitleForm title={title} id={id} />
@@ -35,4 +35,4 @@ const BoadrNavbar = async ({ title, id, workspaceId }: BoardNavbarProps) => {
   );
 };
 
-export default BoadrNavbar;
+export default BoardNavbar;
