@@ -1,7 +1,7 @@
 "use client";
 
 import { toggleFavorite } from "@/aciotns/board/toggleFavorite";
-
+import { useOptimistic } from "react";
 import { Board } from "@prisma/client";
 import { Star } from "lucide-react";
 import Link from "next/link";
@@ -14,21 +14,24 @@ interface BoardCardProps {
 
 const BoardCard = ({ board }: BoardCardProps) => {
   const [isPending, startTransition] = useTransition();
-  const [isFavorite, setIsFavorite] = useState(board.isFavorites);
+  const [optimisticFavorite, toggleOptimisticFavorite] = useOptimistic(
+    board.isFavorites,
+    (curr, action: boolean) => action
+  );
 
   const handleToggleFavorite = async () => {
+    toggleOptimisticFavorite(!optimisticFavorite);
     startTransition(async () => {
       const res = await toggleFavorite(board.id);
       if (res.error) {
+        toggleOptimisticFavorite(optimisticFavorite);
         toast.error(res.error);
         return;
       }
-      setIsFavorite(res.data!);
       toast.success(`已${res.data ? "加入" : "移除"}收藏`);
     });
   };
 
-  
   return (
     <Link
       key={board.id}
@@ -47,7 +50,7 @@ const BoardCard = ({ board }: BoardCardProps) => {
       >
         <Star
           className={`h-4 w-4 absolute bottom-2 right-2 text-yellow-400 hover:scale-110 transition  ${
-            isFavorite
+            optimisticFavorite
               ? "fill-yellow-400 hover:fill-transparent"
               : "hover:fill-yellow-400"
           }`}
