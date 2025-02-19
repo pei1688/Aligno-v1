@@ -2,11 +2,10 @@
 import { updateCard } from "@/aciotns/card/updateCard";
 import { UpdateCardSchema } from "@/aciotns/card/updateCard/schema";
 import { Input } from "@/components/ui/input";
-import { useUpdateCardStatus } from "@/hook/useUpdateCardStatus";
+import { Skeleton } from "@/components/ui/skeleton";
 import { CardWithList } from "@/lib/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useQueryClient } from "@tanstack/react-query";
-import { Circle, CircleCheck } from "lucide-react";
 import { useParams } from "next/navigation";
 import { useRef, useTransition } from "react";
 import { useForm } from "react-hook-form";
@@ -20,8 +19,6 @@ const Header = ({ card }: HeaderProps) => {
   const queryClient = useQueryClient();
   const inputRef = useRef<HTMLInputElement | null>(null);
   const [isPending, startTransition] = useTransition();
-  const { updateStatus, isPending: isTransitionPending } =
-    useUpdateCardStatus();
   const {
     register,
     handleSubmit,
@@ -63,11 +60,6 @@ const Header = ({ card }: HeaderProps) => {
       }
     });
   };
-  const handleToggleComplete = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.stopPropagation();
-    const newStatus = !card.completed;
-    updateStatus(card.id, card, newStatus);
-  };
   return (
     <div className="flex items-center gap-x-3 mb-6 w-full text-aligno-300">
       <div className="w-full">
@@ -75,17 +67,6 @@ const Header = ({ card }: HeaderProps) => {
           onSubmit={handleSubmit(onSubmit)}
           className="flex items-center gap-2 mb-2 relative"
         >
-          <button
-            onClick={handleToggleComplete}
-            disabled={isTransitionPending}
-            className="absolute left-0 top-1/2 transform -translate-y-1/2  transition-opacity duration-200"
-          >
-            {card.completed ? (
-              <CircleCheck className="w-4 h-4 fill-green-500 text-aligno-400 " />
-            ) : (
-              <Circle className="w-5 h-5 text-aligno-300" />
-            )}
-          </button>
           <Input type="hidden" defaultValue={card.id} {...register("id")} />
           <Input
             type="hidden"
@@ -117,7 +98,7 @@ const Header = ({ card }: HeaderProps) => {
                 }
               }
             }}
-            className="font-semibold text-xl px-1 h-auto bg-transparent border-transparent relative -left-1.5 w-[95%] focus-visible:bg-neutral-800 focus-visible:border-input truncate translate-x-6"
+            className="font-semibold text-xl px-1 h-auto bg-transparent border-transparent relative -left-1.5 w-[95%] focus-visible:bg-neutral-800 focus-visible:border-input truncate "
           />
           {errors.title && (
             <p className="text-red-500 text-sm w-[100px]">

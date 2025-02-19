@@ -26,21 +26,21 @@ const CardModal = () => {
       <DialogTitle className="hidden">更新卡片</DialogTitle>
       <DialogContent onOpenAutoFocus={(e) => e.preventDefault()}>
         {!CardData ? (
-          <div className="flex justify-center items-center h-[300px]">
+          <div className="flex justify-center items-center min-h-40">
             <Spinner />
           </div>
         ) : (
           <>
-            <Header card={CardData} />
-            <div className="grid grid-cols-1 md:grid-cols-4 md:gap-4">
-              <div className="col-span-3">
-                <div className="w-full space-y-8">
-                  <Description card={CardData} />
-                  <Activity id={id!} />
-                </div>
+          <Header card={CardData} />
+          <div className="grid grid-cols-1 md:grid-cols-4 md:gap-4">
+            <div className="col-span-3">
+              <div className="w-full space-y-8">
+                <Description card={CardData} />
+                <Activity id={id!} />
               </div>
-              <Action card={CardData} />
             </div>
+            <Action card={CardData} />
+          </div>
           </>
         )}
       </DialogContent>
