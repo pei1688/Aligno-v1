@@ -94,8 +94,10 @@ const NavItem = ({
           </p>
         </FormPopover>
       </div>
-      {/*User*/}
-      <UserProfile user={user} />
+      <div className="flex gap-4 items-center">
+        {/*User*/}
+        <UserProfile user={user} />
+      </div>
     </>
   );
 };

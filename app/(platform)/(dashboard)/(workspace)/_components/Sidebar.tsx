@@ -64,13 +64,13 @@ const Sidebar = ({
 
   return (
     <div
-      className={`h-[calc(100vh-3rem)] bg-neutral-800/50 relative w-64 shrink-0  flex flex-col transition-all duration-100 ${
+      className={`h-[calc(100vh-3rem)] bg-aligno-700/50 relative w-64 shrink-0  flex flex-col transition-all duration-100 ${
         isCollapsed ? "w-8" : "w-64"
       }`}
     >
       {/* 收合按鈕 */}
       <Button
-        className="absolute top-2 right-[-16px] bg-neutral-700 hover:bg-neutral-600 rounded-full p-1 shadow-md transition-all border border-aligno-300/70"
+        className="absolute top-2 right-[-16px] bg-aligno-700 hover:bg-aligno-600 rounded-full p-1 shadow-md transition-all border border-aligno-300/70"
         onClick={() => setIsCollapsed(!isCollapsed)}
         size="none"
       >

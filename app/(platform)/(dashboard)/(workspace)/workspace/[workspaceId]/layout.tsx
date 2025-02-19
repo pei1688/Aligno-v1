@@ -27,10 +27,7 @@ const WorkspaceIdLayout = async ({
   params: { workspaceId: string };
 }) => {
   const { getUser } = getKindeServerSession();
-  const userPromise = getUser();
-
-  // 先解析 user，才能用 user.id 查 workspace
-  const user = await userPromise;
+  const  user = await getUser();
   if (!user) {
     redirect("/");
   }
@@ -44,7 +41,7 @@ const WorkspaceIdLayout = async ({
       },
     }),
     db.workspace.findMany({
-      where: { userId: user.id }, // 只查詢該使用者的 workspace
+      where: { userId: user.id },
     }),
   ]);
 

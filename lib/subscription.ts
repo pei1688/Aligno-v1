@@ -3,6 +3,8 @@ import db from "./db";
 const DAY_IN_MS = 86_400_000;
 
 export const subscription = async (workspaceId: string) => {
+  console.log(workspaceId);
+  
   if (!workspaceId) {
     return false;
   }
@@ -25,8 +27,7 @@ export const subscription = async (workspaceId: string) => {
   // 確認訂閱是否仍然有效（stripeCurrentPeriodEnd + 1 天 > 現在時間）。
   const isValid =
     wsSubscription.stripePriceId &&
-    wsSubscription.stripeCurrentPeriodEnd &&
-    wsSubscription.stripeCurrentPeriodEnd?.getTime() + DAY_IN_MS > Date.now();
+    wsSubscription.stripeCurrentPeriodEnd?.getTime()! + DAY_IN_MS > Date.now();
 
   return !!isValid;
 };

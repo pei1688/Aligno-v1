@@ -5,15 +5,20 @@ import { Suspense } from "react";
 import Spinner from "@/components/Spinner";
 import { BoardList } from "./_components/BoardList";
 import { subscription } from "@/lib/subscription";
+import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 
 const WorkspaceIdPage = async ({
   params,
 }: {
   params: { workspaceId: string };
 }) => {
-  // 只查詢一次，避免 BoardList 內部重複查詢
-  const workspaces = await db.workspace.findMany();
-
+  const { getUser } = getKindeServerSession();
+  const user = await getUser();
+  const workspaces = await db.workspace.findMany({
+    where: {
+      userId: user.id,
+    },
+  });
   // 從已查詢的 workspaces 找到當前的 workspace
   const workspace = workspaces.find((w) => w.id === params.workspaceId);
 
@@ -23,6 +28,7 @@ const WorkspaceIdPage = async ({
   const isPremium = await subscription(params.workspaceId);
   const workspaceWithPremium = { ...workspace, isPremium };
 
+  
   return (
     <div className="w-full max-w-[1200px] mx-auto px-4 mt-8">
       {/* 大螢幕時左右排列 */}
@@ -47,4 +53,4 @@ const WorkspaceIdPage = async ({
   );
 };
 
-export default WorkspaceIdPage
+export default WorkspaceIdPage;

@@ -72,7 +72,11 @@ export const hasAvailableCount = async (workspaceId: string) => {
     },
   });
 
-  return !workspaceLimit || workspaceLimit.count < MAX_FREE_BOARDS;
+  if (!workspaceLimit || workspaceLimit.count < MAX_FREE_BOARDS) {
+    return true;
+  } else {
+    return false;
+  }
 };
 
 //獲取可用數量

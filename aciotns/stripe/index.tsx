@@ -12,8 +12,6 @@ export const StripeRedirect = async (workspaceId: string) => {
   if (!user) {
     return { error: "尚未登入" };
   }
-  console.log(workspaceId);
-
   const settingUrl = absoluteUrl(`/workspace/${workspaceId}`);
   let url = "";
   try {

@@ -52,7 +52,7 @@ export async function createBoard(formData: FormData) {
       },
     });
     //是會員就不增加
-    if (isPremium) {
+    if (!isPremium) {
       await incrementAvailableCount(workspaceId);
     }
 
