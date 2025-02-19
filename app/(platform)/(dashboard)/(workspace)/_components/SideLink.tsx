@@ -68,6 +68,7 @@ const SideLink = ({
             <Image
               src={imageSrc}
               alt={label}
+              sizes="auto"
               fill
               className="rounded-sm object-cover"
             />

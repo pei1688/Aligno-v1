@@ -15,6 +15,7 @@ const WorkspaceInfo = ({ workspace }: { workspace: WorkProps }) => {
           <Image
             src={"https://avatar.vercel.sh/rauchg"}
             alt="vercel"
+            sizes="auto"
             className="rounded-md object-cover"
             fill
           />

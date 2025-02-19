@@ -5,7 +5,7 @@ import { useOptimistic } from "react";
 import { Board } from "@prisma/client";
 import { Star } from "lucide-react";
 import Link from "next/link";
-import { useState, useTransition } from "react";
+import { useTransition } from "react";
 import { toast } from "sonner";
 
 interface BoardCardProps {

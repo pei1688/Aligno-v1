@@ -14,12 +14,13 @@ const CreateWorkspace = ({ user }: UserProps) => {
   const wsModal = useCreateWorkspaceFormModal();
   return (
     <div className="w-full  lg:w-[600px] space-y-4 hidden lg:block">
-      <div className="relative w-full h-[300px]">
-        <div>
+      <div className=" w-full h-[300px]">
+        <div className="relative w-full h-full">
           <Image
             src={"/img/work.jpg"}
             alt="work"
-            className="object-cover relative"
+            sizes="auto"
+            className="object-cover rounded-md shadow-md"
             fill
           />
           <p className="absolute top-36 left-6 text-aligno-600 font-semibold">

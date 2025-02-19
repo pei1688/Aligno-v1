@@ -21,7 +21,7 @@ interface CardFormProps {
 }
 //forwardRef 讓父元件可以直接操控子元件的 DOM
 export const CardForm = forwardRef<HTMLTextAreaElement, CardFormProps>(
-  ({ listId, isEditing, enableEditing, disableEditing },ref) => {
+  ({ listId, isEditing, enableEditing, disableEditing }, ref) => {
     const params = useParams();
     const formRef = useRef<HTMLFormElement | null>(null);
     const [isPending, startTransition] = useTransition();
@@ -38,23 +38,6 @@ export const CardForm = forwardRef<HTMLTextAreaElement, CardFormProps>(
         boardId: params.boardId as string,
       },
     });
-
-    const onKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "Escape") {
-        disableEditing();
-      }
-    };  
-    
-    useOnClickOutside(formRef, disableEditing);
-    useEventListener("keydown", onKeyDown);
-
-    const textKeyDown: KeyboardEventHandler<HTMLTextAreaElement> = (e) => {
-      if (e.key === "Enter" && !e.shiftKey) {
-        e.preventDefault();
-        formRef.current?.requestSubmit();
-        reset();
-      }
-    };
 
     const onSubmit = async (data: {
       title: string;
@@ -79,6 +62,23 @@ export const CardForm = forwardRef<HTMLTextAreaElement, CardFormProps>(
           console.error("建立失敗:", error);
         }
       });
+    };
+
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        disableEditing();
+      }
+    };
+
+    useOnClickOutside(formRef, disableEditing);
+    useEventListener("keydown", onKeyDown);
+
+    const textKeyDown: KeyboardEventHandler<HTMLTextAreaElement> = (e) => {
+      if (e.key === "Enter" && !e.shiftKey) {
+        e.preventDefault();
+        formRef.current?.requestSubmit();
+        reset();
+      }
     };
 
     return isEditing ? (

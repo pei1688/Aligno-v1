@@ -38,6 +38,7 @@ const FavorBoardItem = ({ id, title, image, isFavorite }: FavorBoardItem) => {
           <Image
             src={image}
             alt={title}
+            sizes="auto"
             className="object-cover w-full h-full"
             fill
           />
