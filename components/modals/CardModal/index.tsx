@@ -31,16 +31,16 @@ const CardModal = () => {
           </div>
         ) : (
           <>
-          <Header card={CardData} />
-          <div className="grid grid-cols-1 md:grid-cols-4 md:gap-4">
-            <div className="col-span-3">
-              <div className="w-full space-y-8">
-                <Description card={CardData} />
-                <Activity id={id!} />
+            <Header card={CardData} />
+            <div className="grid grid-cols-1 md:grid-cols-4 md:gap-4">
+              <div className="col-span-3">
+                <div className="w-full space-y-8">
+                  <Description card={CardData} />
+                  <Activity id={id!} />
+                </div>
               </div>
+              <Action card={CardData} />
             </div>
-            <Action card={CardData} />
-          </div>
           </>
         )}
       </DialogContent>

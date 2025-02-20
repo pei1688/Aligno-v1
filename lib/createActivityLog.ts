@@ -1,5 +1,5 @@
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
-import { ACTION, ENTITY_TYPE, Prisma } from "@prisma/client";
+import { ACTION, ENTITY_TYPE } from "@prisma/client";
 import db from "./db";
 
 interface Acprops {
