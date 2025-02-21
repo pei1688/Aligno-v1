@@ -16,7 +16,7 @@ interface BoardNavbarProps {
 
 const BoardNavbar = async ({ title, id, workspaceId }: BoardNavbarProps) => {
   return (
-    <div className="w-full h-14 z-[40] bg-aligno-800/50 fixed top-12 flex items-center px-6 gpa-x-4 text-aligno-200">
+    <div className="w-full h-14 z-[40] bg-aligno-800/50  top-12 flex items-center px-6 gpa-x-4 text-aligno-200">
       <BoardTitleForm title={title} id={id} />
 
       <div className="ml-auto flex items-center gap-6">
