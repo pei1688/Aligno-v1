@@ -19,12 +19,11 @@ const ActivityPage = async ({
     return <p className="text-gray-500">看板不存在</p>;
   }
   const isPremium = await subscription(params.workspaceId);
-  const workspaceWithPremium = { ...workspace, isPremium };
 
   return (
     <div className="w-full max-w-[1200px] mx-auto px-4 mt-8">
       <div className="w-full lg:w-[300px]">
-        <WorkspaceInfo workspace={workspaceWithPremium} />
+        <WorkspaceInfo isPremium={isPremium} workspace={workspace} />
       </div>
       <Separator className="mt-16 mb-8 border-white/30 border-t-[0.5px] border-solid" />
       <Suspense fallback={<Spinner />}>

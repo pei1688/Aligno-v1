@@ -13,13 +13,12 @@ const SettingPage = async ({ params }: { params: { workspaceId: string } }) => {
     return <p className="text-gray-500 text-center mt-8">看板不存在</p>;
   }
   const isPremium = await subscription(params.workspaceId);
-  const workspaceWithPremium = { ...workspace, isPremium };
 
   return (
     <div className="w-full max-w-[1200px] mx-auto px-4 mt-8">
       {/* 工作區資訊區塊 */}
       <div className="w-full lg:w-[300px]">
-        <WorkspaceInfo workspace={workspaceWithPremium} />
+        <WorkspaceInfo isPremium={isPremium} workspace={workspace} />
       </div>
 
       {/* 分隔線 */}
