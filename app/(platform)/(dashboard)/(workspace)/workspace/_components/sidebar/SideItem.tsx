@@ -12,9 +12,10 @@ import {
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import FormPopover from "@/components/form/FormPopover";
-import SideLink from "./SideLink";
+
 import FavorBoardItem from "../FavorBoardItem";
 import Image from "next/image";
+import SideLink from "./SideLink";
 
 interface BoardProps {
   id: string;
