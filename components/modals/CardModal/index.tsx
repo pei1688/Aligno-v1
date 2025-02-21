@@ -1,5 +1,10 @@
 "use client";
-import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogTitle,
+} from "@/components/ui/dialog";
 import { useCardModal } from "@/hook/useCardModal";
 import { fetcher } from "@/lib/fetcher";
 import { CardWithList } from "@/lib/types";
@@ -24,6 +29,7 @@ const CardModal = () => {
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogTitle className="hidden">更新卡片</DialogTitle>
+      <DialogDescription />
       <DialogContent onOpenAutoFocus={(e) => e.preventDefault()}>
         {!CardData ? (
           <div className="flex justify-center items-center min-h-40">

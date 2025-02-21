@@ -11,8 +11,11 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-import SideLink from "./SideLink";
 import FormPopover from "@/components/form/FormPopover";
+import SideLink from "./SideLink";
+import FavorBoardItem from "../FavorBoardItem";
+import Image from "next/image";
+
 interface BoardProps {
   id: string;
   title: string;
@@ -59,9 +62,10 @@ const SideItem = ({ workspace, workspaces, user }: SidebarClientProps) => {
       path: "/settings",
     },
   ];
+
   return (
     <div
-      className={`h-[calc(100vh-3rem)] bg-aligno-700/90 relative w-64 shrink-0  flex flex-col transition-all duration-100 ${
+      className={`h-[calc(100vh-3rem)] bg-aligno-700 relative w-64 shrink-0  flex flex-col transition-all duration-100 border border-aligno-600 border-l-transparent ${
         isCollapsed ? "w-8" : "w-64"
       }`}
     >
@@ -76,7 +80,20 @@ const SideItem = ({ workspace, workspaces, user }: SidebarClientProps) => {
         </Button>
       ) : (
         <div className="flex items-center justify-between">
-          <h1 className="px-4 py-2 text-lg font-semibold">{workspace.title}</h1>
+          <div className="flex items-center px-4">
+            <div className="w-[32px] h-[32px] relative ">
+              <Image
+                src={"https://avatar.vercel.sh/rauchg"}
+                alt="vercel"
+                sizes="auto"
+                className="rounded-md object-cover"
+                fill
+              />
+            </div>
+            <h2 className="px-4 py-2 text-lg font-semibold">
+              {workspace.title}
+            </h2>
+          </div>
           <Button
             onClick={() => setIsCollapsed(!isCollapsed)}
             variant="transparent"
@@ -87,7 +104,6 @@ const SideItem = ({ workspace, workspaces, user }: SidebarClientProps) => {
           </Button>
         </div>
       )}
-      {/* 標題 */}
       {!isCollapsed && (
         <>
           <Separator className="mb-8 border-aligno-400/50 border-t-[0.5px] border-solid" />
@@ -124,17 +140,14 @@ const SideItem = ({ workspace, workspaces, user }: SidebarClientProps) => {
 
         {/* 看板列表 */}
         {!isCollapsed && (
-          <div>
+          <div className="space-y-2">
             {workspace.boards && workspace.boards.length > 0
               ? workspace.boards.map((board) => (
-                  <SideLink
+                  <FavorBoardItem
                     key={board.id}
                     id={board.id}
-                    href={`/board/${board.id}`}
-                    icon={!board.imageThumbUrl ? LayoutDashboard : undefined}
-                    imageSrc={board.imageThumbUrl || undefined}
-                    label={isCollapsed ? "" : board.title}
-                    path={`/board/${board.id}`}
+                    title={board.title}
+                    image={board.imageThumbUrl}
                     isFavorite={board.isFavorites}
                   />
                 ))

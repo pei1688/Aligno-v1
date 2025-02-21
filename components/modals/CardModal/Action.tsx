@@ -4,7 +4,6 @@ import { copyCard } from "@/aciotns/card/copyCard";
 import { deleteCard } from "@/aciotns/card/deleteCard";
 import { DeleteOrCopyCardSchema } from "@/aciotns/card/GeneralSchema/DeleteOrCopy-CardSchema";
 import { Button } from "@/components/ui/button";
-import { Skeleton } from "@/components/ui/skeleton";
 import { useCardModal } from "@/hook/useCardModal";
 import { CardWithList } from "@/lib/types";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -94,12 +93,3 @@ export const Action = ({ card }: ActionProps) => {
   );
 };
 
-Action.Skeleton = function ActionSkeleton() {
-  return (
-    <div className="space-y-2 mt-2 ">
-      <Skeleton className="w-20 h-4 bg-neutral-600" />
-      <Skeleton className="w-full h-8 bg-neutral-600" />
-      <Skeleton className="w-full h-8 bg-neutral-600" />
-    </div>
-  );
-};

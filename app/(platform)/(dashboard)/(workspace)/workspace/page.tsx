@@ -26,8 +26,11 @@ const WorkspacePage = async () => {
             <WorkspaceList id={user.id} />
           </Suspense>
         </div>
-        {/* 中間 */}
-        <CreateWorkspace user={user} />
+        {/* 中間 - 在手機時顯示在最上方 */}
+        <div className="order-[-1] lg:order-none">
+          <CreateWorkspace user={user} />
+        </div>
+
         {/* 右側 */}
         <div className="flex flex-col lg:w-[200px]">
           <h2 className="flex items-center gap-2 text-sm mb-4 px-2 ">

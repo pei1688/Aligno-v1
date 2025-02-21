@@ -1,10 +1,11 @@
 "use client";
 
 import { toggleFavorite } from "@/aciotns/board/toggleFavorite";
+import Spinner from "@/components/Spinner";
 import { Star } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { useOptimistic, useTransition } from "react";
+import { useCallback, useOptimistic, useTransition } from "react";
 import { toast } from "sonner";
 
 interface FavorBoardItem {
@@ -20,21 +21,25 @@ const FavorBoardItem = ({ id, title, image, isFavorite }: FavorBoardItem) => {
     isFavorite,
     (curr, action: boolean) => action
   );
-  const handleToggleFavorite = async () => {
-    startTransition(async () => {
-      toggleOptimisticFavorite(!optimisticFavorite);
-      const res = await toggleFavorite(id);
-      if (res.error) {
-        toggleOptimisticFavorite(optimisticFavorite);
-        toast.error(res.error);
-        return;
-      }
-    });
-  };
+  const handleToggleFavorite = useCallback(
+    async (e: React.MouseEvent) => {
+      e.preventDefault(); // 防止點擊 Star 時跳轉
+      startTransition(async () => {
+        toggleOptimisticFavorite(!optimisticFavorite);
+        const res = await toggleFavorite(id!);
+        if (res.error) {
+          toggleOptimisticFavorite(optimisticFavorite!);
+          toast.error(res.error);
+          return;
+        }
+      });
+    },
+    [id, optimisticFavorite, toggleOptimisticFavorite]
+  );
   return (
-    <div className="flex items-center justify-between w-full lg:w-[200px] hover:bg-aligno-600 rounded-lg transition-all p-2 cursor-pointer">
-      <Link href={`/board/${id}`} className="flex items-center">
-        <div className="relative h-[30px] w-[50px] rounded-md overflow-hidden">
+    <div className="flex items-center justify-between w-full  hover:bg-aligno-600 rounded-sm transition-all py-1 px-4  cursor-pointer group">
+      <Link href={`/board/${id}`} className="flex items-center ">
+        <div className="relative h-[25px] w-[40px] rounded-sm overflow-hidden">
           <Image
             src={image}
             alt={title}
@@ -46,8 +51,18 @@ const FavorBoardItem = ({ id, title, image, isFavorite }: FavorBoardItem) => {
         <p className="font-semibold text-aligno-200 px-2 text-sm">{title}</p>
       </Link>
       {/* 收藏按鈕 */}
-      <button onClick={handleToggleFavorite} disabled={isPending}>
-        <Star className="h-4 w-4 text-yellow-400 hover:scale-110 transition fill-yellow-400 hover:fill-transparent" />
+      <button onClick={handleToggleFavorite}>
+        {isPending ? (
+          <Spinner />
+        ) : (
+          <Star
+            className={`h-5 w-5 transition text-yellow-500 opacity-0 group-hover:opacity-100  ${
+              optimisticFavorite
+                ? "fill-yellow-500 hover:fill-yellow-500 opacity-100"
+                : "hover:fill-yellow-500"
+            }`}
+          />
+        )}
       </button>
     </div>
   );

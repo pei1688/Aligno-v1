@@ -1,6 +1,6 @@
 import db from "@/lib/db";
-import Sidebar from "../../_components/Sidebar";
 import { startCase } from "lodash";
+import Sidebar from "../_components/sidebar/Sidebar";
 
 // 讓 Next.js 生成 Metadata
 export async function generateMetadata({

@@ -6,6 +6,7 @@ import { MAX_FREE_BOARDS } from "@/constants/board";
 import { subscription } from "@/lib/subscription";
 import BoardCard from "./BoardCard";
 import CreateBoard from "./CreateBoard";
+import { memo } from "react";
 
 export interface WorkspacesProps {
   title: string;
@@ -30,7 +31,10 @@ export const BoardList = async ({
 
   const boards = await db.board.findMany({
     where: { workspaceId: id },
+    orderBy: { createdAt: "asc" },
   });
+
+  const MemoCard = memo(BoardCard);
 
   const availableCount = await getAvailableCount(id);
   const isPremium = await subscription(id);
@@ -47,7 +51,7 @@ export const BoardList = async ({
 
       {/* 看板列表 */}
       {boards.map((board) => (
-        <BoardCard key={board.id} board={board} />
+        <MemoCard key={board.id} board={board} />
       ))}
     </div>
   );

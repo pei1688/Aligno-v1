@@ -1,12 +1,13 @@
 "use client";
 
 import { toggleFavorite } from "@/aciotns/board/toggleFavorite";
-import { useOptimistic } from "react";
+import { useCallback, useOptimistic } from "react";
 import { Board } from "@prisma/client";
 import { Star } from "lucide-react";
 import Link from "next/link";
 import { useTransition } from "react";
 import { toast } from "sonner";
+import Image from "next/image";
 
 interface BoardCardProps {
   board: Board;
@@ -14,23 +15,26 @@ interface BoardCardProps {
 
 const BoardCard = ({ board }: BoardCardProps) => {
   const [isPending, startTransition] = useTransition();
+
   const [optimisticFavorite, toggleOptimisticFavorite] = useOptimistic(
     board.isFavorites,
     (curr, action: boolean) => action
   );
-
-  const handleToggleFavorite = async (e: React.MouseEvent) => {
-    e.preventDefault(); // 防止點擊 Star 時跳轉
-    startTransition(async () => {
-      toggleOptimisticFavorite(!optimisticFavorite);
-      const res = await toggleFavorite(board.id);
-      if (res.error) {
-        toggleOptimisticFavorite(optimisticFavorite);
-        toast.error(res.error);
-        return;
-      }
-    });
-  };
+  const handleToggleFavorite = useCallback(
+    async (e: React.MouseEvent) => {
+      e.preventDefault(); // 防止點擊 Star 時跳轉
+      startTransition(async () => {
+        toggleOptimisticFavorite(!optimisticFavorite);
+        const res = await toggleFavorite(board.id);
+        if (res.error) {
+          toggleOptimisticFavorite(optimisticFavorite!);
+          toast.error(res.error);
+          return;
+        }
+      });
+    },
+    [board.id, optimisticFavorite, toggleOptimisticFavorite]
+  );
 
   return (
     <Link
@@ -41,14 +45,24 @@ const BoardCard = ({ board }: BoardCardProps) => {
     >
       <div className="absolute inset-0 transition bg-black/30 group-hover:bg-black/40" />
       <p className="relative font-semibold text-aligno-200">{board.title}</p>
-      <button onClick={handleToggleFavorite} disabled={isPending}>
-        <Star
-          className={`h-4 w-4 absolute bottom-2 right-2 text-yellow-400 hover:scale-110 transition  ${
-            optimisticFavorite
-              ? "fill-yellow-400 hover:fill-transparent"
-              : "hover:fill-yellow-400"
-          }`}
-        />
+      <button onClick={handleToggleFavorite}>
+        {isPending ? (
+          <Image
+            src="/spinner.svg"
+            alt="spinner"
+            width={20}
+            height={20}
+            className="animate-bounce h-5 w-5 absolute bottom-2 right-2"
+          />
+        ) : (
+          <Star
+            className={`h-5 w-5 absolute bottom-2 right-2 text-yellow-400 hover:scale-110 transition  ${
+              optimisticFavorite
+                ? "fill-yellow-400 hover:fill-transparent"
+                : "hover:fill-yellow-400"
+            }`}
+          />
+        )}
       </button>
     </Link>
   );

@@ -2,10 +2,10 @@
 import { updateCard } from "@/aciotns/card/updateCard";
 import { UpdateCardSchema } from "@/aciotns/card/updateCard/schema";
 import { Input } from "@/components/ui/input";
-import { Skeleton } from "@/components/ui/skeleton";
 import { CardWithList } from "@/lib/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useQueryClient } from "@tanstack/react-query";
+import { Layout } from "lucide-react";
 import { useParams } from "next/navigation";
 import { useRef, useTransition } from "react";
 import { useForm } from "react-hook-form";
@@ -73,33 +73,35 @@ const Header = ({ card }: HeaderProps) => {
             defaultValue={params.boardId}
             {...register("boardId")}
           />
-
-          <Input
-            type="text"
-            id="title"
-            disabled={isPending}
-            defaultValue={card.title}
-            {...register("title")}
-            ref={(e) => {
-              inputRef.current = e;
-              register("title").ref(e);
-            }}
-            onBlur={async () => {
-              const isValid = await trigger("title");
-              if (isValid) {
-                await handleSubmit(onSubmit)();
-              }
-            }}
-            onKeyDown={(e) => {
-              if (e.key === "Enter") {
-                e.preventDefault();
-                if (inputRef.current) {
-                  inputRef.current.blur();
+          <div className="flex items-center gap-2 ">
+            <Layout className="h-4 w-4" />
+            <Input
+              type="text"
+              id="title"
+              disabled={isPending}
+              defaultValue={card.title}
+              {...register("title")}
+              ref={(e) => {
+                inputRef.current = e;
+                register("title").ref(e);
+              }}
+              onBlur={async () => {
+                const isValid = await trigger("title");
+                if (isValid) {
+                  await handleSubmit(onSubmit)();
                 }
-              }
-            }}
-            className="font-semibold text-xl px-1 h-auto bg-transparent border-transparent relative -left-1.5 w-[95%] focus-visible:bg-neutral-800 focus-visible:border-input truncate "
-          />
+              }}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  e.preventDefault();
+                  if (inputRef.current) {
+                    inputRef.current.blur();
+                  }
+                }
+              }}
+              className="font-semibold text-xl px-1 h-auto bg-transparent border-transparent relative -left-1.5 w-[95%] focus-visible:bg-neutral-800 focus-visible:border-input truncate "
+            />
+          </div>
           {errors.title && (
             <p className="text-red-500 text-sm w-[100px]">
               {errors.title.message}

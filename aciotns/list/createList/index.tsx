@@ -13,7 +13,6 @@ export const createList = async (formData: FormData) => {
   if (!user) {
     return { error: "尚未登入" };
   }
-  console.log(formData);
 
   const title = formData.get("title") as string;
   const boardId = formData.get("boardId") as string;

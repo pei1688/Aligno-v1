@@ -13,7 +13,7 @@ interface UserProps {
 const CreateWorkspace = ({ user }: UserProps) => {
   const wsModal = useCreateWorkspaceFormModal();
   return (
-    <div className="w-full  lg:w-[600px] space-y-4 hidden lg:block">
+    <div className="w-full  lg:w-[600px] space-y-4 ">
       <div className=" w-full h-[300px]">
         <div className="relative w-full h-full">
           <Image

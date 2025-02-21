@@ -3,7 +3,6 @@ import db from "./db";
 const DAY_IN_MS = 86_400_000;
 
 export const subscription = async (workspaceId: string) => {
-  console.log(workspaceId);
   
   if (!workspaceId) {
     return false;

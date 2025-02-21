@@ -2,7 +2,7 @@ import db from "@/lib/db";
 import BoardNavbar from "./_components/boardNavbar/BoardNavbar";
 import { notFound } from "next/navigation";
 import { startCase } from "lodash";
-import Sidebar from "../../../(workspace)/_components/Sidebar";
+import Sidebar from "../../../(workspace)/workspace/_components/sidebar/Sidebar";
 
 export async function generateMetadata({
   params,
