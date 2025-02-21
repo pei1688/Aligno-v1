@@ -22,6 +22,7 @@ import Link from "next/link";
 import { createWorkspace } from "@/aciotns/workspace/createWorkspace";
 import { useRouter } from "next/navigation";
 import { usePremiumModal } from "@/hook/usePremiumModal";
+import { useKindeAuth } from "@kinde-oss/kinde-auth-nextjs";
 interface WorkspaceProps {
   id: string;
   title: string;
@@ -32,7 +33,6 @@ interface FormPopoverProps {
   align?: "start" | "center" | "end";
   sideOffset?: number;
   workspaces: WorkspaceProps[];
-  userName?: string | null;
 }
 const FormPopover = ({
   children,
@@ -40,8 +40,8 @@ const FormPopover = ({
   align,
   sideOffset,
   workspaces,
-  userName,
 }: FormPopoverProps) => {
+  const { user } = useKindeAuth();
   const {
     register,
     handleSubmit,
@@ -71,7 +71,7 @@ const FormPopover = ({
         if (!targetWorkspaceId && (!workspaces || workspaces.length === 0)) {
           // 自動建立工作區
           const workspaceResponse = await createWorkspace({
-            title: `${userName}的工作區`, // 使用用戶名作為預設名稱
+            title: `${user?.given_name}的工作區`, // 使用用戶名作為預設名稱
           });
 
           if (workspaceResponse?.error) {

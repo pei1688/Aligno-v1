@@ -131,7 +131,6 @@ const SideItem = ({ workspace, workspaces, user }: SidebarClientProps) => {
                 sideOffset={5}
                 side="bottom"
                 workspaces={workspaces}
-                userName={user.given_name}
               >
                 <Plus className="h-4 w-4 cursor-pointer" />
               </FormPopover>

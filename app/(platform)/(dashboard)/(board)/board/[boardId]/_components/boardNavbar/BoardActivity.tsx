@@ -41,9 +41,11 @@ const BoardActivity = async ({ id }: BoardActProps) => {
         </PopoverClose>
         <Separator className="my-2 border-white/30 border-t-[0.5px] border-solid" />
         <div className="p-4 max-h-[500px] overflow-auto">
-          {actLogs.map((act) => (
-            <ActivityItem key={act.id} act={act} />
-          ))}
+          {actLogs.length > 0 ? (
+            actLogs.map((act) => <ActivityItem key={act.id} act={act} />)
+          ) : (
+            <p className="flex justify-center">沒有活動記錄</p>
+          )}
         </div>
       </PopoverContent>
     </Popover>

@@ -1,5 +1,5 @@
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
-import GuestPage from "./_components/page/GuestPage";
+import GuestPage from "./_components/GuestPage";
 import { redirect } from "next/navigation";
 
 export default async function Home() {

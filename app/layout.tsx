@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import { AuthProvider } from "@/components/AuthProvider";
 import { siteConfig } from "@/config/webConfig";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -25,12 +24,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <AuthProvider>
-      <html lang="en">
-        <body className={`bg-aligno-700 text-aligno-200/70 ${inter.className}`}>
+    <html lang="en">
+      <body className={`bg-aligno-700 text-aligno-200/70 ${inter.className}`}>
           <main>{children}</main>
-        </body>
-      </html>
-    </AuthProvider>
+      </body>
+    </html>
   );
 }

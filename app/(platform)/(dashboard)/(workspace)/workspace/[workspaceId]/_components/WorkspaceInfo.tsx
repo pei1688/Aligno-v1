@@ -2,12 +2,10 @@ import { CreditCard } from "lucide-react";
 import Image from "next/image";
 
 interface WorkProps {
-  id: string;
-  title: string;
-  description: string | null;
+  workspace: { title: string; description?: string | null };
   isPremium: boolean;
 }
-const WorkspaceInfo = ({ workspace }: { workspace: WorkProps }) => {
+const WorkspaceInfo = ({ workspace, isPremium }: WorkProps) => {
   return (
     <div className="flex flex-col">
       <div className="flex items-center gap-x-4">
@@ -24,7 +22,7 @@ const WorkspaceInfo = ({ workspace }: { workspace: WorkProps }) => {
           <p className="font-semibold text-xl sm:text-2xl">{workspace.title}</p>
           <div className="flex items-center text-xs text-muted-foreground">
             <CreditCard className="h-3 w-3 mr-1" />
-            {workspace.isPremium ? "Premium" : "免費"}
+            {isPremium ? "Premium" : "免費"}
           </div>
         </div>
       </div>

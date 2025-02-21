@@ -86,7 +86,6 @@ const NavItem = ({
           sideOffset={5}
           side="bottom"
           workspaces={workspaces}
-          userName={user.given_name || "Guest"}
         >
           <p className="text-sm cursor-pointer bg-aligno-600 px-2 p-1 sm:p-1 rounded-sm hover:bg-aligno-500 ">
             <span className="sm:block hidden">建立新的看板</span>

@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "postinstall":"prisma generate"
+    "postinstall": "prisma generate"
   },
   "dependencies": {
     "@hello-pangea/dnd": "^17.0.0",
@@ -44,6 +44,7 @@
     "zustand": "^5.0.3"
   },
   "devDependencies": {
+    "@next/bundle-analyzer": "^15.1.7",
     "@types/lodash": "^4.17.15",
     "@types/node": "^20",
     "@types/react": "^18",

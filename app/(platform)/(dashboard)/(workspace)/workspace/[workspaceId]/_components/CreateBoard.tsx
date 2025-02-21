@@ -1,11 +1,11 @@
 "use client";
 import FormPopover from "@/components/form/FormPopover";
-import { WorkspacesProps } from "./BoardList";
+import { Workspace } from "@prisma/client";
 import { useMediaQuery } from "usehooks-ts";
 
+
 interface CreateBoardProps {
-  workspaces: WorkspacesProps[];
-  user: { given_name: string | null };
+  workspaces: Workspace[];
   isPremium: boolean;
   MAX_FREE_BOARDS: number;
   availableCount: number;
@@ -13,7 +13,6 @@ interface CreateBoardProps {
 
 const CreateBoard = ({
   workspaces,
-  user,
   isPremium,
   MAX_FREE_BOARDS,
   availableCount,
@@ -25,7 +24,6 @@ const CreateBoard = ({
       sideOffset={isMobile ? -200 : 5}
       side={isMobile ? "bottom" : "right"}
       workspaces={workspaces}
-      userName={user.given_name}
     >
       <div
         role="button"
