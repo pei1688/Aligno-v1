@@ -15,17 +15,11 @@ export const BoardList = async ({
   const { getUser } = getKindeServerSession();
   const user = await getUser();
 
-  const boardsPromise = db.board.findMany({
-    where: { workspaceId },
-    orderBy: { createdAt: "asc" },
-  });
-
   const workspacesPromise = db.workspace.findMany({
     where: { userId: user.id },
   });
 
-  const [boards, availableCount, workspaces] = await Promise.all([
-    boardsPromise,
+  const [availableCount, workspaces] = await Promise.all([
     getAvailableCount(workspaceId),
     workspacesPromise,
   ]);
@@ -38,10 +32,7 @@ export const BoardList = async ({
         MAX_FREE_BOARDS={MAX_FREE_BOARDS}
         availableCount={availableCount}
       />
-
-      {boards.map((board) => (
-        <BoardCard key={board.id} board={board} />
-      ))}
+      <BoardCard workspaceId={workspaceId} />
     </div>
   );
 };

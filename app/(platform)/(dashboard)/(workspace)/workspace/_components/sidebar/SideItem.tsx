@@ -13,35 +13,28 @@ import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import FormPopover from "@/components/form/FormPopover";
 
-import FavorBoardItem from "../FavorBoardItem";
 import Image from "next/image";
 import SideLink from "./SideLink";
+import { useQuery } from "@tanstack/react-query";
+import { fetcher } from "@/lib/fetcher";
+import { Board } from "@prisma/client";
+import Spinner from "@/components/Spinner";
+import SideBoardItem from "./SideBoardItem";
 
-interface BoardProps {
-  id: string;
-  title: string;
-  isFavorites: boolean;
-  imageThumbUrl: string;
-}
 interface WorkspaceProps {
   title: string;
   id: string;
   description?: string | null;
   createdAt?: Date;
   userId?: string;
-  boards?: BoardProps[];
 }
-interface UserProps {
-  id: string;
-  given_name: string | null;
-}
+
 interface SidebarClientProps {
   workspace: WorkspaceProps;
   workspaces: WorkspaceProps[];
-  user: UserProps;
 }
 
-const SideItem = ({ workspace, workspaces, user }: SidebarClientProps) => {
+const SideItem = ({ workspace, workspaces }: SidebarClientProps) => {
   const [isCollapsed, setIsCollapsed] = useState(true);
   const links = [
     {
@@ -64,27 +57,33 @@ const SideItem = ({ workspace, workspaces, user }: SidebarClientProps) => {
     },
   ];
 
+  const { data = [] } = useQuery<Board[]>({
+    queryKey: ["workspace-board", workspace.id],
+    queryFn: () => fetcher(`/api/workspace/${workspace.id}`),
+    enabled: !!workspace.id,
+  });
+
   return (
     <div
-      className={`h-[calc(100vh-3rem)] bg-aligno-700 relative w-64 shrink-0  flex flex-col transition-all duration-100 border border-aligno-600 border-l-transparent ${
+      className={`h-[calc(100vh-3rem)] bg-aligno-700 relative shrink-0 flex flex-col transition-all duration-100 border border-aligno-600 border-l-transparent ${
         isCollapsed ? "w-8" : "w-64"
       }`}
     >
-      {/* 收合按鈕 */}
+      {/* 收合/展開按鈕 */}
       {isCollapsed ? (
         <Button
           className="absolute top-2 right-[-16px] bg-aligno-700 hover:bg-aligno-600 rounded-full p-1 shadow-md transition-all border border-aligno-300/70"
-          onClick={() => setIsCollapsed(!isCollapsed)}
+          onClick={() => setIsCollapsed(false)}
           size="none"
         >
-          <ChevronRight className="w-8 h-5 " />
+          <ChevronRight className="w-8 h-5" />
         </Button>
       ) : (
         <div className="flex items-center justify-between">
           <div className="flex items-center px-4">
-            <div className="w-[32px] h-[32px] relative ">
+            <div className="w-[32px] h-[32px] relative">
               <Image
-                src={"https://avatar.vercel.sh/rauchg"}
+                src="https://avatar.vercel.sh/rauchg"
                 alt="vercel"
                 sizes="auto"
                 className="rounded-md object-cover"
@@ -96,25 +95,26 @@ const SideItem = ({ workspace, workspaces, user }: SidebarClientProps) => {
             </h2>
           </div>
           <Button
-            onClick={() => setIsCollapsed(!isCollapsed)}
+            onClick={() => setIsCollapsed(true)}
             variant="transparent"
             size="none"
             className="p-2 mr-2"
           >
-            <ChevronLeft className="w-5 h-5 " />
+            <ChevronLeft className="w-5 h-5" />
           </Button>
         </div>
       )}
+
       {!isCollapsed && (
         <>
           <Separator className="mb-8 border-aligno-400/50 border-t-[0.5px] border-solid" />
-          {/* 選單連結 */}
+          {/* 側邊選單連結 */}
           {links.map((link) => (
             <SideLink
               key={link.label}
               href={link.href}
               icon={link.icon}
-              label={isCollapsed ? "" : link.label}
+              label={link.label}
               path={link.path}
             />
           ))}
@@ -123,38 +123,28 @@ const SideItem = ({ workspace, workspaces, user }: SidebarClientProps) => {
 
       {/* 看板區域 */}
       <div className="flex flex-col gap-4 mt-8">
-        <div className="flex items-center justify-between px-2">
-          {!isCollapsed && (
-            <>
+        {!isCollapsed && (
+          <>
+            <div className="flex items-center justify-between px-2">
               <h3 className="text-sm px-2">你的看板</h3>
-              <FormPopover
-                sideOffset={5}
-                side="bottom"
-                workspaces={workspaces}
-              >
+              <FormPopover sideOffset={5} side="bottom" workspaces={workspaces}>
                 <Plus className="h-4 w-4 cursor-pointer" />
               </FormPopover>
-            </>
-          )}
-        </div>
-
-        {/* 看板列表 */}
-        {!isCollapsed && (
-          <div className="space-y-2">
-            {workspace.boards && workspace.boards.length > 0
-              ? workspace.boards.map((board) => (
-                  <FavorBoardItem
+            </div>
+            <div className="space-y-2">
+              {data.length === 0 ? (
+                <Spinner />
+              ) : (
+                data.map((board) => (
+                  <SideBoardItem
                     key={board.id}
-                    id={board.id}
-                    title={board.title}
-                    image={board.imageThumbUrl}
-                    isFavorite={board.isFavorites}
+                    board={board}
+                    workspaceId={workspace.id}
                   />
                 ))
-              : !isCollapsed && (
-                  <p className="text-sm text-aligno-300 px-2">尚無看板</p>
-                )}
-          </div>
+              )}
+            </div>
+          </>
         )}
       </div>
     </div>

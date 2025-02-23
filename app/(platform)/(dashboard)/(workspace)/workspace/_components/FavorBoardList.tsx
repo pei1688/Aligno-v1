@@ -22,9 +22,12 @@ const FavorBoardList = async ({ id }: User) => {
     },
   });
   // 將所有 workspace 的收藏看板展開成單一陣列，只保留 isFavorites 為 true 的項目
-  const favorBoards = workspaces
-    .flatMap((workspace) => workspace.boards)
-    .filter((board) => board.isFavorites);
+  const favorBoards = workspaces.flatMap((workspace) =>
+    workspace.boards
+      .filter((board) => board.isFavorites)
+      .map((board) => ({ ...board, workspaceId: workspace.id }))
+  );
+
   return (
     <>
       {favorBoards.length > 0 ? (
@@ -36,6 +39,7 @@ const FavorBoardList = async ({ id }: User) => {
               title={board.title}
               image={board.imageThumbUrl}
               isFavorite={board.isFavorites}
+              workspaceId={board.workspaceId}
             />
           ))}
         </div>

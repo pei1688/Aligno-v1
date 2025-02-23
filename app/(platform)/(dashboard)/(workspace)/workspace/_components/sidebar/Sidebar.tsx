@@ -37,7 +37,7 @@ const Sidebar = async ({ workspaceId }: { workspaceId: string }) => {
   if (!workspace) {
     redirect("/");
   }
-  return <SideItem workspace={workspace} workspaces={workspaces} user={user} />;
+  return <SideItem workspace={workspace} workspaces={workspaces}/>;
 };
 
 export default Sidebar;
