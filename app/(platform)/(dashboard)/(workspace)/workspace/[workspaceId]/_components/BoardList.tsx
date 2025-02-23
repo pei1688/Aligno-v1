@@ -4,13 +4,12 @@ import { MAX_FREE_BOARDS } from "@/constants/board";
 import BoardCard from "./BoardCard";
 import CreateBoard from "./CreateBoard";
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
+import { subscription } from "@/lib/subscription";
 
 export const BoardList = async ({
   workspaceId,
-  isPremium,
 }: {
   workspaceId: string;
-  isPremium: boolean;
 }) => {
   const { getUser } = getKindeServerSession();
   const user = await getUser();
@@ -29,6 +28,7 @@ export const BoardList = async ({
     getAvailableCount(workspaceId),
     workspacesPromise,
   ]);
+  const isPremium = await subscription(workspaceId);
 
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">

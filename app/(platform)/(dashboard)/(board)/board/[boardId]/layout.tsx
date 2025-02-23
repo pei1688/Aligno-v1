@@ -46,13 +46,13 @@ const BoardIdLayout = async ({
     >
       <div className="absolute inset-0 bg-aligno-800/10" />
       {/* 主要內容*/}
-      <div className="relative flex ">
+      <div className="relative flex w-full overflow-hidden">
         {/* Sidebar  */}
         <div className="z-50">
           <Sidebar workspaceId={board.workspaceId} />
         </div>
         {/* 右側內容區域 */}
-        <div className="flex flex-col flex-1  w-64">
+        <div className="flex flex-col flex-1 min-w-0">
           {/* BoardNavbar  */}
           <BoardNavbar
             title={board.title}
@@ -60,7 +60,7 @@ const BoardIdLayout = async ({
             workspaceId={board.workspaceId}
           />
           {/* 主要內容區域 */}
-          <main className=" mt-16 h-full">{children}</main>
+          <main className=" mt-8 h-full">{children}</main>
         </div>
       </div>
     </div>

@@ -1,12 +1,11 @@
 "use client";
 
-import { toggleFavorite } from "@/aciotns/board/toggleFavorite";
 import Spinner from "@/components/Spinner";
+import { useFavorToggle } from "@/hook/useFavorToggle";
 import { Star } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { useCallback, useOptimistic, useTransition } from "react";
-import { toast } from "sonner";
+
 
 interface FavorBoardItem {
   id: string;
@@ -16,29 +15,11 @@ interface FavorBoardItem {
 }
 
 const FavorBoardItem = ({ id, title, image, isFavorite }: FavorBoardItem) => {
-  const [isPending, startTransition] = useTransition();
-  const [optimisticFavorite, toggleOptimisticFavorite] = useOptimistic(
-    isFavorite,
-    (curr, action: boolean) => action
-  );
-  const handleToggleFavorite = useCallback(
-    async (e: React.MouseEvent) => {
-      e.preventDefault(); // 防止點擊 Star 時跳轉
-      startTransition(async () => {
-        toggleOptimisticFavorite(!optimisticFavorite);
-        const res = await toggleFavorite(id!);
-        if (res.error) {
-          toggleOptimisticFavorite(optimisticFavorite!);
-          toast.error(res.error);
-          return;
-        }
-      });
-    },
-    [id, optimisticFavorite, toggleOptimisticFavorite]
-  );
+  const { isPending, optimisticFavorite, handleToggleFavorite } =
+    useFavorToggle(id, isFavorite);
   return (
     <div className="flex items-center justify-between w-full  hover:bg-aligno-600 rounded-sm transition-all py-1 px-4  cursor-pointer group">
-      <Link href={`/board/${id}`} className="flex items-center ">
+      <Link href={`/board/${id}`} className="flex items-center">
         <div className="relative h-[25px] w-[40px] rounded-sm overflow-hidden">
           <Image
             src={image}
@@ -48,7 +29,9 @@ const FavorBoardItem = ({ id, title, image, isFavorite }: FavorBoardItem) => {
             fill
           />
         </div>
-        <p className="font-semibold text-aligno-200 px-2 text-sm">{title}</p>
+        <p className="font-semibold text-aligno-200 px-2 text-sm truncate max-w-[100px]">
+          {title}
+        </p>
       </Link>
       {/* 收藏按鈕 */}
       <button onClick={handleToggleFavorite}>

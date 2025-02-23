@@ -70,7 +70,7 @@ const BoardTitleForm = ({ title, id }: BoardTitleProps) => {
   };
 
   return isEditing ? (
-    <form onSubmit={handleSubmit(onSubmit)} className="flex items-center px-2">
+    <form onSubmit={handleSubmit(onSubmit)} className="flex items-center px-2 ">
       <Input
         {...register("title")}
         ref={(e) => {
@@ -86,20 +86,18 @@ const BoardTitleForm = ({ title, id }: BoardTitleProps) => {
         type="text"
         id="title"
         defaultValue={title}
-        className="text-lg font-bold px-[7px] p-1 h-7 bg-transparent focus-visible:outline-none focus-visible:ring-transparent border-none "
+        className="text-lg font-bold px-[7px] p-1 h-7 bg-transparent focus-visible:outline-none focus-visible:ring-transparent border-none"
       />
       <ErrorMessage errormessage={errors.title?.message} />
     </form>
   ) : (
-    <Button
-      variant="transparent"
+    <div
+      role="button"
       onClick={enableEditing}
-      className="font-bold text-lg size-auto p-1 px-3"
-      size="none"
-      disabled={isPending}
+      className="font-bold text-lg size-auto p-1 px-3 truncate max-w-[300px] w-full"
     >
       {title}
-    </Button>
+    </div>
   );
 };
 

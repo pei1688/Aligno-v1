@@ -1,11 +1,27 @@
+import db from "@/lib/db";
+import { subscription } from "@/lib/subscription";
+import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import { CreditCard } from "lucide-react";
 import Image from "next/image";
 
 interface WorkProps {
-  workspace: { title: string; description?: string | null };
-  isPremium: boolean;
+  workspaceId: string;
 }
-const WorkspaceInfo = ({ workspace, isPremium }: WorkProps) => {
+const WorkspaceInfo = async ({ workspaceId}: WorkProps) => {
+  const { getUser } = getKindeServerSession();
+  const user = await getUser();
+
+  // 這裡統一查詢 workspace 和 subscription，避免重複請求
+  const workspace = await db.workspace.findFirst({
+    where: {
+      id: workspaceId,
+      userId: user.id,
+    },
+  });
+  if (!workspace) {
+    return <p className="text-gray-500 text-center">工作區不存在</p>;
+  }
+  const isPremium = await subscription(workspaceId);
   return (
     <div className="flex flex-col">
       <div className="flex items-center gap-x-4">

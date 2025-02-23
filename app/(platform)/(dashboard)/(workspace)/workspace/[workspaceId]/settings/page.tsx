@@ -2,7 +2,8 @@ import { Separator } from "@/components/ui/separator";
 import WorkspaceInfo from "../_components/WorkspaceInfo";
 import db from "@/lib/db";
 import SettingForm from "./_components/SettingForm";
-import { subscription } from "@/lib/subscription";
+import { Suspense } from "react";
+import Spinner from "@/components/Spinner";
 
 const SettingPage = async ({ params }: { params: { workspaceId: string } }) => {
   const workspace = await db.workspace.findUnique({
@@ -12,13 +13,16 @@ const SettingPage = async ({ params }: { params: { workspaceId: string } }) => {
   if (!workspace) {
     return <p className="text-gray-500 text-center mt-8">看板不存在</p>;
   }
-  const isPremium = await subscription(params.workspaceId);
 
   return (
     <div className="w-full max-w-[1200px] mx-auto px-4 mt-8">
       {/* 工作區資訊區塊 */}
       <div className="w-full lg:w-[300px]">
-        <WorkspaceInfo isPremium={isPremium} workspace={workspace} />
+        <Suspense fallback={<Spinner />}>
+          <WorkspaceInfo
+            workspaceId={params.workspaceId}
+          />
+        </Suspense>
       </div>
 
       {/* 分隔線 */}

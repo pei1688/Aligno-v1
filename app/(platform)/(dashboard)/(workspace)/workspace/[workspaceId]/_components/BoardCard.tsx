@@ -1,40 +1,18 @@
 "use client";
 
-import { toggleFavorite } from "@/aciotns/board/toggleFavorite";
-import { useCallback, useOptimistic } from "react";
 import { Board } from "@prisma/client";
 import { Star } from "lucide-react";
 import Link from "next/link";
-import { useTransition } from "react";
-import { toast } from "sonner";
 import Image from "next/image";
+import { useFavorToggle } from "@/hook/useFavorToggle";
 
 interface BoardCardProps {
   board: Board;
 }
 
 const BoardCard = ({ board }: BoardCardProps) => {
-  const [isPending, startTransition] = useTransition();
-
-  const [optimisticFavorite, toggleOptimisticFavorite] = useOptimistic(
-    board.isFavorites,
-    (curr, action: boolean) => action
-  );
-  const handleToggleFavorite = useCallback(
-    async (e: React.MouseEvent) => {
-      e.preventDefault(); // 防止點擊 Star 時跳轉
-      startTransition(async () => {
-        toggleOptimisticFavorite(!optimisticFavorite);
-        const res = await toggleFavorite(board.id);
-        if (res.error) {
-          toggleOptimisticFavorite(optimisticFavorite!);
-          toast.error(res.error);
-          return;
-        }
-      });
-    },
-    [board.id, optimisticFavorite, toggleOptimisticFavorite]
-  );
+  const { isPending, optimisticFavorite, handleToggleFavorite } =
+    useFavorToggle(board.id, board.isFavorites);
 
   return (
     <Link
