@@ -37,7 +37,7 @@ const NavItem = ({
   return (
     <>
       <div className=" flex justify-center items-center gap-8 ">
-        <Link href="/" className="text-xl flex items-center gap-4">
+        <Link href="/workspace" className="text-xl flex items-center gap-4">
           <div className="relative h-[20px] w-[40px]">
             <Image
               src={"/logo.svg"}
