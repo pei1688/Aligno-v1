@@ -12,7 +12,7 @@ export const useFavorToggle = (boardId: string, isFavorite: boolean) => {
   );
   const handleToggleFavorite = useCallback(
     async (e: React.MouseEvent) => {
-      e.preventDefault(); // 防止點擊 Star 時跳轉
+      e.preventDefault();
       startTransition(async () => {
         toggleOptimisticFavorite(!optimisticFavorite);
         const res = await toggleFavorite(boardId);

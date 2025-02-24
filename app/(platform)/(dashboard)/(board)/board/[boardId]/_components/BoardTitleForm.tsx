@@ -2,7 +2,6 @@
 import { updateBoard } from "@/aciotns/board/updateBoard";
 import { UpdateBoardSchema } from "@/aciotns/board/updateBoard/schema";
 import ErrorMessage from "@/components/form/ErrorMessage";
-import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRef, useState, useTransition } from "react";
@@ -86,6 +85,7 @@ const BoardTitleForm = ({ title, id }: BoardTitleProps) => {
         type="text"
         id="title"
         defaultValue={title}
+        disabled={isPending}
         className="text-lg font-bold px-[7px] p-1 h-7 bg-transparent focus-visible:outline-none focus-visible:ring-transparent border-none"
       />
       <ErrorMessage errormessage={errors.title?.message} />

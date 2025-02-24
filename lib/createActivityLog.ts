@@ -9,8 +9,8 @@ interface Acprops {
   entityType: ENTITY_TYPE;
   entityTitle: string;
   action: ACTION;
-  fromListId?: string; // 修正：新增 `fromListId`
-  toListId?: string; // 修正：新增 `toListId`
+  fromListId?: string; 
+  toListId?: string; 
   fromListName?: string;
   toListName?: string;
 }

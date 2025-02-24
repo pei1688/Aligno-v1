@@ -34,7 +34,7 @@ export const BoardList = async ({
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
       <CreateBoard
         workspaces={workspaces}
-        isPremium={isPremium} // 直接使用父組件傳遞的 isPremium
+        isPremium={isPremium} 
         MAX_FREE_BOARDS={MAX_FREE_BOARDS}
         availableCount={availableCount}
       />
