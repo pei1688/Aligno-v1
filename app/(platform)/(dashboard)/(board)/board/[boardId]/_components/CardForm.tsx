@@ -1,7 +1,7 @@
 "use client";
 import { createCard } from "@/aciotns/card/createCard";
 import { CreateCardSchema } from "@/aciotns/card/createCard/schema";
-import { FormTextarea } from "@/components/form/FormTextarea";
+import { FormTextarea } from "@/components/form/Form-Textarea";
 import SubmitButton from "@/components/SubmitButton";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";

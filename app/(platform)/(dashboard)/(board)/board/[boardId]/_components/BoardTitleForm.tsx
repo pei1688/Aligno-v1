@@ -1,11 +1,11 @@
 "use client";
 import { updateBoard } from "@/aciotns/board/updateBoard";
 import { UpdateBoardSchema } from "@/aciotns/board/updateBoard/schema";
-import ErrorMessage from "@/components/form/ErrorMessage";
-import { Input } from "@/components/ui/input";
+import ErrorMessage from "@/components/form/Form-Error";
+import { FormInput } from "@/components/form/Form-Input";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useRef, useState, useTransition } from "react";
-import { useForm } from "react-hook-form";
+import { useState, useTransition } from "react";
+import { Controller, useForm } from "react-hook-form";
 import { toast } from "sonner";
 interface BoardTitleProps {
   title: string;
@@ -15,12 +15,12 @@ interface BoardTitleProps {
 const BoardTitleForm = ({ title, id }: BoardTitleProps) => {
   const [isEditing, setIsEditing] = useState(false);
   const [isPending, startTransition] = useTransition();
-  const inputRef = useRef<HTMLInputElement | null>(null);
 
   const {
-    register,
     handleSubmit,
     trigger,
+    setFocus,
+    control,
     formState: { errors },
   } = useForm<{ title: string; id: string }>({
     resolver: zodResolver(UpdateBoardSchema),
@@ -31,8 +31,7 @@ const BoardTitleForm = ({ title, id }: BoardTitleProps) => {
   const enableEditing = () => {
     setIsEditing(true);
     setTimeout(() => {
-      inputRef.current?.focus();
-      inputRef.current?.select();
+      setFocus("title");
     });
   };
 
@@ -47,11 +46,9 @@ const BoardTitleForm = ({ title, id }: BoardTitleProps) => {
       disableEditing();
       return;
     }
-
     const formData = new FormData();
     formData.append("title", data.title);
     formData.append("id", id);
-
     startTransition(async () => {
       try {
         const res = await updateBoard(formData);
@@ -70,23 +67,23 @@ const BoardTitleForm = ({ title, id }: BoardTitleProps) => {
 
   return isEditing ? (
     <form onSubmit={handleSubmit(onSubmit)} className="flex items-center px-2 ">
-      <Input
-        {...register("title")}
-        ref={(e) => {
-          inputRef.current = e;
-          register("title").ref(e);
-        }}
-        onBlur={async () => {
-          const isValid = await trigger("title");
-          if (isValid) {
-            handleSubmit(onSubmit)();
-          }
-        }}
-        type="text"
-        id="title"
-        defaultValue={title}
-        disabled={isPending}
-        className="text-lg font-bold px-[7px] p-1 h-7 bg-transparent focus-visible:outline-none focus-visible:ring-transparent border-none"
+      <Controller
+        name="title"
+        control={control}
+        render={({ field }) => (
+          <FormInput
+            id="title"
+            disabled={isPending}
+            className="px-[7px] p-1 h-7 bg-transparent border-2 border-transparent focus:border-focusInput text-base font-semibold transition-all"
+            onCustomBlur={async () => {
+              const isValid = await trigger("title");
+              if (isValid) {
+                handleSubmit(onSubmit)();
+              }
+            }}
+            {...field}
+          />
+        )}
       />
       <ErrorMessage errormessage={errors.title?.message} />
     </form>
@@ -94,9 +91,9 @@ const BoardTitleForm = ({ title, id }: BoardTitleProps) => {
     <div
       role="button"
       onClick={enableEditing}
-      className="font-bold text-lg size-auto p-1 px-3 truncate max-w-[300px] w-full"
+      className="font-bold text-lg size-auto p-1 px-3 truncate max-w-[300px] w-full border-2 border-transparent cursor-pointer flex items-center "
     >
-      {title}
+      <span className="block w-full text-base font-semibold">{title}</span>
     </div>
   );
 };

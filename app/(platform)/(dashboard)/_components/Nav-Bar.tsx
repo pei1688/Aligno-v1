@@ -1,7 +1,7 @@
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import db from "@/lib/db";
 import { redirect } from "next/navigation";
-import NavItem from "./NavItem";
+import NavItem from "./Nav-Item";
 
 const Navbar = async () => {
   const { getUser } = await getKindeServerSession();
@@ -14,13 +14,32 @@ const Navbar = async () => {
     where: {
       userId: user.id,
     },
+    select: { id: true, title: true },
   });
 
+  const favorBoards = await db.board.findMany({
+    where: {
+      isFavorites: true,
+      workspace: {
+        userId: user.id,
+      },
+    },
+    select: {
+      id: true,
+      title: true,
+      imageThumbUrl: true,
+      isFavorites: true,
+      workspace: {
+        select: {
+          title: true,
+        },
+      },
+    },
+  });
 
-  
   return (
     <nav className="h-[3rem] px-4 flex items-center w-full justify-between bg-aligno-700 border-b-aligno-600 border border-transparent">
-      <NavItem workspaces={workspaces} user={user} />
+      <NavItem workspaces={workspaces} user={user} favorBoards={favorBoards} />
     </nav>
   );
 };

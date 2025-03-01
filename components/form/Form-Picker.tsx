@@ -6,6 +6,7 @@ import { Check, Loader2 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { Input } from "../ui/input";
 
 interface FormPickerProps {
   id: string;
@@ -75,7 +76,7 @@ const FormPicker = ({
                 "cursor-pointer rounded-sm aspect-video relative hover:opacity-75 transition bg-muted group"
               )}
             >
-              <input
+              <Input
                 type="radio"
                 id={id}
                 name={id}

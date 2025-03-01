@@ -1,14 +1,15 @@
 "use client";
 import { updateUser } from "@/aciotns/user/updateUser";
 import { UpdateUserSchema } from "@/aciotns/user/updateUser/schema";
-import ErrorMessage from "@/components/form/ErrorMessage";
+import ErrorMessage from "@/components/form/Form-Error";
+import { FormInput } from "@/components/form/Form-Input";
 import SubmitButton from "@/components/SubmitButton";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useTransition } from "react";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import { toast } from "sonner";
 
 interface UserProps {
@@ -33,6 +34,8 @@ const UserForm = ({
   const {
     register,
     handleSubmit,
+    control,
+    trigger,
     formState: { errors },
   } = useForm({
     resolver: zodResolver(UpdateUserSchema),
@@ -61,14 +64,36 @@ const UserForm = ({
       <Separator className="my-4 border-white/30 border-t-[0.5px] border-solid" />
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
         <div className="flex gap-6">
-          <div className="flex-1">
-            <Label htmlFor="firstName">姓</Label>
-            <Input type="text" id="firstName" {...register("firstName")} />
+          <div className="flex flex-col space-y-2 flex-1">
+            <Controller
+              name="firstName"
+              control={control}
+              render={({ field }) => (
+                <FormInput
+                  id="firstName"
+                  label="姓"
+                  placeholder="輸入姓"
+                  className=""
+                  {...field}
+                />
+              )}
+            />
           </div>
           <ErrorMessage errormessage={errors.firstName?.message} />
-          <div className="flex-1">
-            <Label htmlFor="lastName">名字</Label>
-            <Input type="text" id="lastName" {...register("lastName")} />
+          <div className="flex flex-col space-y-2 flex-1">
+            <Controller
+              name="lastName"
+              control={control}
+              render={({ field }) => (
+                <FormInput
+                  id="lastName"
+                  label="名字"
+                  placeholder="輸入名字"
+                  className=""
+                  {...field}
+                />
+              )}
+            />
           </div>
           <ErrorMessage errormessage={errors.lastName?.message} />
         </div>

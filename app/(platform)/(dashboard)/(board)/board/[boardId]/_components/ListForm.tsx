@@ -8,24 +8,26 @@ import { useEventListener, useOnClickOutside } from "usehooks-ts";
 import { Input } from "@/components/ui/input";
 import { useParams } from "next/navigation";
 import { Button } from "@/components/ui/button";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { CreateListSchema } from "@/aciotns/list/createList/schema";
 import { toast } from "sonner";
 import { createList } from "@/aciotns/list/createList";
-import ErrorMessage from "@/components/form/ErrorMessage";
+import ErrorMessage from "@/components/form/Form-Error";
+import { FormInput } from "@/components/form/Form-Input";
 
 const ListForm = () => {
   const params = useParams<{ boardId: string }>();
   const [isEditing, setIsEditing] = useState(false);
   const [isPending, startTransition] = useTransition();
-  const inputRef = useRef<HTMLInputElement | null>(null);
   const formRef = useRef<HTMLFormElement | null>(null);
 
   const {
-    register,
     handleSubmit,
+    trigger,
     reset,
+    control,
+    setFocus,
     formState: { errors },
   } = useForm<{ title: string; boardId: string }>({
     resolver: zodResolver(CreateListSchema),
@@ -35,8 +37,8 @@ const ListForm = () => {
   const enableEditing = () => {
     setIsEditing(true);
     setTimeout(() => {
-      inputRef.current?.focus();
-    });
+      setFocus("title");
+    }, 100);
   };
   const disableEditing = () => {
     setIsEditing(false);
@@ -54,6 +56,7 @@ const ListForm = () => {
 
   const onSubmit = async (data: { title: string; boardId: string }) => {
     const formData = new FormData();
+    console.log(formData);
     formData.append("title", data.title);
     formData.append("boardId", data.boardId);
     startTransition(async () => {
@@ -82,21 +85,32 @@ const ListForm = () => {
             onSubmit={handleSubmit(onSubmit)}
             className="w-full p-3 rounded-md bg-aligno-800/80 space-y-4 shadow-md"
           >
-            <Input
-              type="text"
-              id="title"
-              placeholder="輸入列表名稱"
-              className="text-sm px-2 py-1 font-medium border-transparent hover:border-input focus:border-input transition"
-              {...register("title")}
-              ref={(e) => {
-                inputRef.current = e;
-                register("title").ref(e);
-              }}
+            <Controller
+              name="title"
+              control={control}
+              render={({ field }) => (
+                <FormInput
+                  id="title"
+                  placeholder="輸入列表名稱"
+                  className="text-sm px-2 py-1 font-medium border-transparent hover:border-input focus:border-input transition"
+                  onCustomBlur={async () => {
+                    const isValid = await trigger("title");
+                    if (isValid) {
+                      handleSubmit(onSubmit)();
+                    }
+                  }}
+                  {...field}
+                />
+              )}
             />
             <ErrorMessage errormessage={errors.title?.message} />
             <Input type="hidden" value={params.boardId} name="boardId" />
             <div className="flex items-center gap-x-2">
-              <SubmitButton variant="transparent" className="w-[100px]" disabled={isPending}>
+              <SubmitButton
+                variant="transparent"
+                className="w-[100px]"
+                disabled={isPending}
+              >
                 新增列表
               </SubmitButton>
               <Button onClick={disableEditing} variant="transparent" size="sm">

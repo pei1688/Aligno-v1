@@ -2,7 +2,7 @@ import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 
 import { redirect } from "next/navigation";
 import db from "@/lib/db";
-import SideItem from "./SideItem";
+import SideItem from "./Side-Item";
 
 const Sidebar = async ({ workspaceId }: { workspaceId: string }) => {
   const { getUser } = getKindeServerSession();
@@ -14,7 +14,6 @@ const Sidebar = async ({ workspaceId }: { workspaceId: string }) => {
   const [workspace, workspaces] = await Promise.all([
     db.workspace.findUnique({
       where: { id: workspaceId },
-
       include: {
         boards: {
           select: {
@@ -37,7 +36,7 @@ const Sidebar = async ({ workspaceId }: { workspaceId: string }) => {
   if (!workspace) {
     redirect("/");
   }
-  return <SideItem workspace={workspace} workspaces={workspaces} user={user} />;
+  return <SideItem workspace={workspace} workspaces={workspaces} />;
 };
 
 export default Sidebar;

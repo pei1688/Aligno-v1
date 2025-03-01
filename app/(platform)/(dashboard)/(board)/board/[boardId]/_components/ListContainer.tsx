@@ -12,9 +12,9 @@ interface ListContainerProps {
   lists: ListWithCards[];
   boardId: string;
 }
-//list: T[] → 原始陣列，可以是任何類型的陣列元素 (如 string[]、
+//list: T[] → 原始陣列，可以是任何類型的陣列元素 (如 string[]
 function reorder<T>(list: T[], startIndex: number, endIndex: number) {
-  //建立原陣列的副本 (Array.from(list))
+  //建立原陣列的副本 (Array.from(list)) react不能直接修改state所以要先拷貝
   const result = Array.from(list);
   //splice(startIndex, 1) 會刪除索引 startIndex 的元素，並回傳刪除的項目。
   const [removed] = result.splice(startIndex, 1);
@@ -26,6 +26,7 @@ function reorder<T>(list: T[], startIndex: number, endIndex: number) {
 const ListContainer = ({ lists, boardId }: ListContainerProps) => {
   const [orderLists, setOrderLists] = useState(lists);
 
+  //監測父組件傳入的資料更新時就會更新
   useEffect(() => {
     setOrderLists(lists);
   }, [lists]);

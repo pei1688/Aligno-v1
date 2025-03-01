@@ -29,6 +29,7 @@ const config: Config = {
           "700": "#222222",
           "800": "#171717",
         },
+        focusInput: "#70a8c2",
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
         card: {

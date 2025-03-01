@@ -7,7 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRef, useTransition } from "react";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import { toast } from "sonner";
 import {
   Dialog,
@@ -17,8 +17,10 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { FormTextarea } from "@/components/form/FormTextarea";
+import { FormTextarea } from "@/components/form/Form-Textarea";
 import { useCreateWorkspaceFormModal } from "@/hook/useCreateWorkspaceFormModal";
+import { FormInput } from "../form/Form-Input";
+import ErrorMessage from "../form/Form-Error";
 
 type WorkspaceFormProps = {
   title: string;
@@ -30,8 +32,10 @@ const CreateWorkspaceModal = () => {
   const {
     register,
     handleSubmit,
-    formState: { errors },
     reset,
+    trigger,
+    control,
+    formState: { errors },
   } = useForm<WorkspaceFormProps>({
     resolver: zodResolver(CreateWorkspaceSchema),
     defaultValues: { title: "", description: "" },
@@ -60,18 +64,27 @@ const CreateWorkspaceModal = () => {
             讓大家更容易在同一位置存取看板，以提高你的工作效率。
           </DialogDescription>
         </DialogHeader>
-        <form onSubmit={handleSubmit(onSubmit)} className=" mt-4 ">
-          <Label className="text-aligno-200">工作區名稱</Label>
-          <Input
-            type="text"
-            id="title"
-            className="my-4"
-            required
-            {...register("title")}
+        <form onSubmit={handleSubmit(onSubmit)} className="mt-4">
+          <Controller
+            name="title"
+            control={control}
+            render={({ field }) => (
+              <FormInput
+                id="title"
+                label="工作區名稱"
+                placeholder="輸入工作區名稱"
+                className="my-4"
+                onCustomBlur={async () => {
+                  const isValid = await trigger("title");
+                  if (isValid) {
+                    handleSubmit(onSubmit)();
+                  }
+                }}
+                {...field}
+              />
+            )}
           />
-          {errors.title && (
-            <p className="text-red-500 text-sm">{errors.title.message}</p>
-          )}
+          <ErrorMessage errormessage={errors.title?.message} />
           <FormTextarea
             label="工作區說明(選填)"
             labelClassName="text-aligno-200"

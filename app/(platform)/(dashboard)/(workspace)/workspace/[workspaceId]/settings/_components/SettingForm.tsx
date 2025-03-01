@@ -2,8 +2,9 @@
 
 import { updateWorkspace } from "@/aciotns/workspace/updateWorkspace";
 import { UpdateWorkspaceSchema } from "@/aciotns/workspace/updateWorkspace/schema";
-import ErrorMessage from "@/components/form/ErrorMessage";
-import { FormTextarea } from "@/components/form/FormTextarea";
+import ErrorMessage from "@/components/form/Form-Error";
+import { FormInput } from "@/components/form/Form-Input";
+import { FormTextarea } from "@/components/form/Form-Textarea";
 import DeleteWorkspaceModal from "@/components/modals/DeleteWorkspace";
 import SubmitButton from "@/components/SubmitButton";
 import { Input } from "@/components/ui/input";
@@ -12,8 +13,8 @@ import { useDeleteWorkspaceModal } from "@/hook/useDeleteWorkspace";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Workspace } from "@prisma/client";
 import { useParams, useRouter } from "next/navigation";
-import {  useTransition } from "react";
-import { useForm } from "react-hook-form";
+import { useTransition } from "react";
+import { Controller, useForm } from "react-hook-form";
 import { toast } from "sonner";
 
 interface SettingFormProps {
@@ -29,6 +30,7 @@ const SettingForm = ({ workspace }: SettingFormProps) => {
     register,
     handleSubmit,
     reset,
+    control,
     formState: { errors },
   } = useForm({
     resolver: zodResolver(UpdateWorkspaceSchema),
@@ -76,14 +78,19 @@ const SettingForm = ({ workspace }: SettingFormProps) => {
     <div className="flex flex-col max-w-lg mx-auto space-y-6 px-4 sm:px-6 lg:px-8">
       <form onSubmit={handleSubmit(onSubmit)} className="">
         <div className="mb-4 space-y-2">
-          <Label htmlFor="title ">工作區名稱</Label>
-          <Input
-            type="text"
-            id="title"
-            defaultValue={workspace.title}
-            className="px-4 py-2 w-full"
-            placeholder="工作區名稱..."
-            {...register("title")}
+          <Controller
+            name="title"
+            control={control}
+            render={({ field }) => (
+              <FormInput
+                id="title"
+                label="工作區名稱"
+                disabled={isPending}
+                className="px-4 py-2 w-full"
+                placeholder="工作區名稱..."
+                {...field}
+              />
+            )}
           />
         </div>
         <ErrorMessage errormessage={errors.title?.message} />

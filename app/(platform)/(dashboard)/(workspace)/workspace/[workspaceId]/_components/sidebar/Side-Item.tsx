@@ -11,11 +11,11 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-import FormPopover from "@/components/form/FormPopover";
+import FormPopover from "@/components/form/Form-Popover";
 
-import FavorBoardItem from "../FavorBoardItem";
 import Image from "next/image";
-import SideLink from "./SideLink";
+import SideLink from "./Side-Link";
+import SideBoardList from "./Side-BoardList";
 
 interface BoardProps {
   id: string;
@@ -31,17 +31,13 @@ interface WorkspaceProps {
   userId?: string;
   boards?: BoardProps[];
 }
-interface UserProps {
-  id: string;
-  given_name: string | null;
-}
+
 interface SidebarClientProps {
   workspace: WorkspaceProps;
   workspaces: WorkspaceProps[];
-  user: UserProps;
 }
 
-const SideItem = ({ workspace, workspaces, user }: SidebarClientProps) => {
+const SideItem = ({ workspace, workspaces }: SidebarClientProps) => {
   const [isCollapsed, setIsCollapsed] = useState(true);
   const links = [
     {
@@ -127,11 +123,7 @@ const SideItem = ({ workspace, workspaces, user }: SidebarClientProps) => {
           {!isCollapsed && (
             <>
               <h3 className="text-sm px-2">你的看板</h3>
-              <FormPopover
-                sideOffset={5}
-                side="bottom"
-                workspaces={workspaces}
-              >
+              <FormPopover sideOffset={5} side="bottom" workspaces={workspaces}>
                 <Plus className="h-4 w-4 cursor-pointer" />
               </FormPopover>
             </>
@@ -143,7 +135,7 @@ const SideItem = ({ workspace, workspaces, user }: SidebarClientProps) => {
           <div className="space-y-2">
             {workspace.boards && workspace.boards.length > 0
               ? workspace.boards.map((board) => (
-                  <FavorBoardItem
+                  <SideBoardList
                     key={board.id}
                     id={board.id}
                     title={board.title}

@@ -6,25 +6,26 @@ interface User {
 }
 
 const FavorBoardList = async ({ id }: User) => {
-  const workspaces = await db.workspace.findMany({
+  const favorBoards = await db.board.findMany({
     where: {
-      userId: id,
+      isFavorites: true,
+      workspace: {
+        userId: id,
+      },
     },
-    include: {
-      boards: {
+    select: {
+      id: true,
+      title: true,
+      imageThumbUrl: true,
+      isFavorites: true,
+      workspace: {
         select: {
-          id: true,
           title: true,
-          imageThumbUrl: true,
-          isFavorites: true,
         },
       },
     },
   });
-  // 將所有 workspace 的收藏看板展開成單一陣列，只保留 isFavorites 為 true 的項目
-  const favorBoards = workspaces
-    .flatMap((workspace) => workspace.boards)
-    .filter((board) => board.isFavorites);
+
   return (
     <>
       {favorBoards.length > 0 ? (
@@ -36,6 +37,7 @@ const FavorBoardList = async ({ id }: User) => {
               title={board.title}
               image={board.imageThumbUrl}
               isFavorite={board.isFavorites}
+              workspace={board.workspace.title}
             />
           ))}
         </div>

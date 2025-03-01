@@ -77,8 +77,8 @@ export async function updateCardOrder(formData: FormData) {
           entityTitle: card.title,
           action: ACTION.MOVE,
           workspaceId,
-          fromListName, // ✅ 傳遞來源列表名稱
-          toListName, // ✅ 傳遞目標列表名稱
+          fromListName, // 傳遞來源列表名稱
+          toListName, // 傳遞目標列表名稱
         })
       )
     );

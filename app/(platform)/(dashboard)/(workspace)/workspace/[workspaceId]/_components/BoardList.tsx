@@ -8,14 +8,23 @@ import { subscription } from "@/lib/subscription";
 
 export const BoardList = async ({
   workspaceId,
+  boardQuery,
+  sortQuery,
 }: {
   workspaceId: string;
+  boardQuery?: string;
+  sortQuery?: string;
 }) => {
   const { getUser } = getKindeServerSession();
   const user = await getUser();
 
   const boardsPromise = db.board.findMany({
-    where: { workspaceId },
+    where: {
+      workspaceId,
+      ...(boardQuery && {
+        title: { contains: boardQuery, mode: "insensitive" },
+      }),
+    },
     orderBy: { createdAt: "asc" },
   });
 
@@ -30,16 +39,24 @@ export const BoardList = async ({
   ]);
   const isPremium = await subscription(workspaceId);
 
+  const sortedBoard = [...boards].sort((a, b) => {
+    if (sortQuery === "A-Z") return a.title.localeCompare(b.title);
+    if (sortQuery === "Z-A") return b.title.localeCompare(a.title);
+    if (sortQuery === "NC-OC")
+      return b.createdAt.getTime() - a.createdAt.getTime();
+    return 0;
+  });
+
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
       <CreateBoard
         workspaces={workspaces}
-        isPremium={isPremium} 
+        isPremium={isPremium}
         MAX_FREE_BOARDS={MAX_FREE_BOARDS}
         availableCount={availableCount}
       />
 
-      {boards.map((board) => (
+      {sortedBoard.map((board) => (
         <BoardCard key={board.id} board={board} />
       ))}
     </div>

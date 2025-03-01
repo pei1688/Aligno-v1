@@ -1,7 +1,7 @@
 "use client";
 import { forwardRef } from "react";
 import { Textarea } from "../ui/textarea";
-import ErrorMessage from "./ErrorMessage";
+import ErrorMessage from "./Form-Error";
 import { Label } from "../ui/label";
 
 interface FormTextareaProps {
@@ -10,7 +10,6 @@ interface FormTextareaProps {
   placeholder?: string;
   register: any;
   onKeyDown?: (e: React.KeyboardEvent<HTMLTextAreaElement>) => void;
-  textareaRef?: React.Ref<HTMLTextAreaElement>;
   errormessage?: string;
   className?: string;
   defaultValue?: string;
@@ -29,7 +28,6 @@ export const FormTextarea = forwardRef<HTMLTextAreaElement, FormTextareaProps>(
       className,
       defaultValue,
       labelClassName,
-      textareaRef,
       ...props
     },
     ref
@@ -39,22 +37,13 @@ export const FormTextarea = forwardRef<HTMLTextAreaElement, FormTextareaProps>(
 
     // 合併傳入的 ref、react-hook-form 的 registerRef
     const mergedRef = (el: HTMLTextAreaElement | null) => {
-      // 傳入的 ref
       if (typeof ref === "function") {
         ref(el);
       } else if (ref) {
         (ref as React.MutableRefObject<HTMLTextAreaElement | null>).current =
           el;
       }
-      //  register 返回的 ref
       registerRef(el);
-      if (typeof textareaRef === "function") {
-        textareaRef(el);
-      } else if (textareaRef) {
-        (
-          textareaRef as React.MutableRefObject<HTMLTextAreaElement | null>
-        ).current = el;
-      }
     };
 
     return (
@@ -71,7 +60,7 @@ export const FormTextarea = forwardRef<HTMLTextAreaElement, FormTextareaProps>(
           onKeyDown={onKeyDown}
           defaultValue={defaultValue}
           className={className}
-          {...rest} // spread 剩余的 register 属性
+          {...rest}
           {...props}
         />
         <ErrorMessage errormessage={errormessage} />

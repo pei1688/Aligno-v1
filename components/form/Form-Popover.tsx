@@ -10,19 +10,20 @@ import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
 import SubmitButton from "../SubmitButton";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ElementRef, useRef, useState, useTransition } from "react";
 import { toast } from "sonner";
 import { createBoard } from "@/aciotns/board/createBoard";
-import FormPicker from "./FormPicker";
+import FormPicker from "./Form-Picker";
 import { CreateBoardSchema } from "@/aciotns/board/createBoard/schema";
-import ErrorMessage from "./ErrorMessage";
+import ErrorMessage from "./Form-Error";
 import Link from "next/link";
 import { createWorkspace } from "@/aciotns/workspace/createWorkspace";
 import { useRouter } from "next/navigation";
 import { usePremiumModal } from "@/hook/usePremiumModal";
 import { useKindeAuth } from "@kinde-oss/kinde-auth-nextjs";
+import { FormInput } from "./Form-Input";
 interface WorkspaceProps {
   id: string;
   title: string;
@@ -45,10 +46,12 @@ const FormPopover = ({
   const {
     register,
     handleSubmit,
-    formState: { errors },
     setValue,
     reset,
     watch,
+    trigger,
+    control,
+    formState: { errors },
   } = useForm({
     resolver: zodResolver(CreateBoardSchema),
     defaultValues: { title: "", image: "", workspaceId: "" },
@@ -141,13 +144,24 @@ const FormPopover = ({
               setValue={setValue}
             />
             <ErrorMessage errormessage={errors.image?.message} />
-            <Label className="">看板名稱</Label>
-            <Input
-              type="text"
-              id="title"
-              required
-              {...register("title")}
-              className="px-4"
+            <Controller
+              name="title"
+              control={control}
+              render={({ field }) => (
+                <FormInput
+                  id="title"
+                  label="工作區名稱"
+                  placeholder="輸入工作區名稱"
+                  className="px-4"
+                  onCustomBlur={async () => {
+                    const isValid = await trigger("title");
+                    if (isValid) {
+                      handleSubmit(onSubmit)();
+                    }
+                  }}
+                  {...field}
+                />
+              )}
             />
             <ErrorMessage errormessage={errors.title?.message} />
 

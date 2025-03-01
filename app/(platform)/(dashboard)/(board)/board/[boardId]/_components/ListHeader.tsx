@@ -6,11 +6,12 @@ import { Input } from "@/components/ui/input";
 import { ListWithCards } from "@/lib/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRef, useState, useTransition } from "react";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { useEventListener } from "usehooks-ts";
 import ListOption from "./ListOption";
-import ErrorMessage from "@/components/form/ErrorMessage";
+import ErrorMessage from "@/components/form/Form-Error";
+import { FormInput } from "@/components/form/Form-Input";
 
 interface ListHeaderProps {
   list: ListWithCards;
@@ -20,12 +21,12 @@ interface ListHeaderProps {
 const ListHeader = ({ list, onAddCard }: ListHeaderProps) => {
   const [isEditing, setIsEditing] = useState(false);
   const [isPending, startTransition] = useTransition();
-  const inputRef = useRef<HTMLInputElement | null>(null);
   const formRef = useRef<HTMLFormElement | null>(null);
   const {
-    register,
     handleSubmit,
     trigger,
+    setFocus,
+    control,
     formState: { errors },
   } = useForm<{ title: string; id: string; boardId: string }>({
     resolver: zodResolver(UpdateListSchema),
@@ -35,8 +36,7 @@ const ListHeader = ({ list, onAddCard }: ListHeaderProps) => {
   const enableEditing = () => {
     setIsEditing(true);
     setTimeout(() => {
-      inputRef.current?.focus();
-      inputRef.current?.select();
+      setFocus("title");
     });
   };
 
@@ -91,23 +91,24 @@ const ListHeader = ({ list, onAddCard }: ListHeaderProps) => {
           onSubmit={handleSubmit(onSubmit)}
           className="flex flex-col "
         >
-          <Input
-            {...register("title")}
-            ref={(e) => {
-              inputRef.current = e;
-              register("title").ref(e);
-            }}
-            onBlur={async () => {
-              const isValid = await trigger("title");
-              if (isValid) {
-                handleSubmit(onSubmit)();
-              }
-            }}
-            type="text"
-            id="title"
-            defaultValue={list.title}
-            disabled={isPending}
-            className="  px-[7px] p-2 h-9 bg-transparent "
+          <Controller
+            name="title"
+            control={control}
+            render={({ field }) => (
+              <FormInput
+                id="title"
+                defaultValue={list.title}
+                disabled={isPending}
+                className="w-full min-h-[36px] px-4 bg-transparent border border-transparent focus:border-focusInput text-base font-semibold transition-all"
+                onCustomBlur={async () => {
+                  const isValid = await trigger("title");
+                  if (isValid) {
+                    handleSubmit(onSubmit)();
+                  }
+                }}
+                {...field}
+              />
+            )}
           />
           <Input type="hidden" value={list.id} name="id" id="id" />
           <Input
@@ -122,9 +123,11 @@ const ListHeader = ({ list, onAddCard }: ListHeaderProps) => {
       ) : (
         <div
           onClick={enableEditing}
-          className="w-full h-9 px-2 font-semibold border-transparent cursor-pointer flex items-center"
+          className="w-full min-h-[36px] px-4 font-semibold border border-transparent cursor-pointer flex items-center "
         >
-          <span className="px-3">{list.title}</span>
+          <span className="block w-full text-base font-semibold">
+            {list.title}
+          </span>
         </div>
       )}
       <ListOption list={list} onAddCard={onAddCard} />

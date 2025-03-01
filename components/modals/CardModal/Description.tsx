@@ -2,7 +2,8 @@
 
 import { updateCard } from "@/aciotns/card/updateCard";
 import { UpdateCardSchema } from "@/aciotns/card/updateCard/schema";
-import { FormTextarea } from "@/components/form/FormTextarea";
+import ErrorMessage from "@/components/form/Form-Error";
+import { FormTextarea } from "@/components/form/Form-Textarea";
 import SubmitButton from "@/components/SubmitButton";
 import { Button } from "@/components/ui/button";
 import { CardWithList } from "@/lib/types";
@@ -24,12 +25,25 @@ const Description = ({ card }: DescriptionProps) => {
   const queryClient = useQueryClient();
   const [isPending, startTransition] = useTransition();
   const formRef = useRef<HTMLFormElement | null>(null);
-  const textareaRef = useRef<HTMLTextAreaElement | null>(null);
   const [isEditing, setIsEditing] = useState(false);
+  const {
+    register,
+    handleSubmit,
+    setFocus,
+    formState: { errors },
+  } = useForm<{ description: string; id: string; boardId: string }>({
+    resolver: zodResolver(UpdateCardSchema),
+    defaultValues: {
+      description: card.description || "", // 初始值設為卡片描述
+      id: card.id,
+      boardId: params.boardId as string,
+    },
+  });
+
   const enableEditing = () => {
     setIsEditing(true);
     setTimeout(() => {
-      textareaRef.current?.focus();
+      setFocus("description");
     });
   };
   const disableEditing = () => {
@@ -43,19 +57,6 @@ const Description = ({ card }: DescriptionProps) => {
   };
   useEventListener("keydown", onKeyDown);
   useOnClickOutside(formRef, disableEditing);
-
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<{ description: string; id: string; boardId: string }>({
-    resolver: zodResolver(UpdateCardSchema),
-    defaultValues: {
-      description: card.description || "", // 初始值設為卡片描述
-      id: card.id,
-      boardId: params.boardId as string,
-    },
-  });
 
   const onSubmit = async (data: {
     description: string;
@@ -99,14 +100,9 @@ const Description = ({ card }: DescriptionProps) => {
               id="description"
               placeholder="請輸入描述..."
               register={register}
-              textareaRef={textareaRef} // 讓外部控制 focus
               className="bg-aligno-600 border-aligno-500"
             />
-            {errors.description && (
-              <p className="text-red-500 text-sm">
-                {errors.description.message}
-              </p>
-            )}
+            <ErrorMessage errormessage={errors.description?.message} />
             <div className="flex items-center gap-x-4">
               <SubmitButton
                 disabled={isPending}
@@ -139,4 +135,3 @@ const Description = ({ card }: DescriptionProps) => {
 };
 
 export default Description;
-
