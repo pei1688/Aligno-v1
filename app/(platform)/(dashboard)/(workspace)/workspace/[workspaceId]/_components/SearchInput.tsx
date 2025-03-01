@@ -45,8 +45,11 @@ const SearchInput = () => {
           type="text"
           placeholder="搜尋看板"
           className="p-2 pl-8 h-[36px] bg-transparent relative border border-aligno-300 outline-none focus:border-focusInput focus:ring-2 focus:ring-focusInput duration-300"
-          onChange={(e) => debounceSearch(e.target.value)}
-          defaultValue={searchParams.get("board")?.toString()}
+          onChange={(e) => {
+            setSearchValue(e.target.value); //即時更新
+            debounceSearch(e.target.value);
+          }}
+          value={searchValue}
         />
         <Search className="h-4 w-4 absolute top-2.5 left-2" />
         {searchValue && (
