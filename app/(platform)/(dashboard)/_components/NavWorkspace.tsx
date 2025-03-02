@@ -2,12 +2,13 @@
 import { Button } from "@/components/ui/button";
 import {
   Popover,
+  PopoverClose,
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { Separator } from "@/components/ui/separator";
 import { useCreateWorkspaceFormModal } from "@/hook/useCreateWorkspaceFormModal";
-import { ChevronDown } from "lucide-react";
+import { ChevronDown, SquareKanban } from "lucide-react";
 import Link from "next/link";
 
 interface NavWorkspaceProps {
@@ -17,11 +18,12 @@ interface NavWorkspaceProps {
 
 const NavWorkspace = ({ workspaces }: { workspaces: NavWorkspaceProps[] }) => {
   const wsModal = useCreateWorkspaceFormModal();
-  
+
   return (
     <Popover>
-      <PopoverTrigger className="px-4 py-1 font-semibold text-sm hover:bg-aligno-600/50 rounded-sm transition flex items-center">
-        工作區
+      <PopoverTrigger className="px-4 py-1 font-semibold text-sm hover:bg-aligno-600/50 rounded-sm transition flex items-center sm:bg-transparent bg-aligno-600">
+        <SquareKanban className="size-4 mr-1"/>
+        <div className="hidden sm:flex sm:mr-1">工作區</div>
         <ChevronDown className="h-4 w-4" />
       </PopoverTrigger>
       <PopoverContent align="start" className="px-4 py-3">
@@ -34,9 +36,11 @@ const NavWorkspace = ({ workspaces }: { workspaces: NavWorkspaceProps[] }) => {
             key={workspace.id}
             className="flex flex-col my-2 text-aligno-200 hover:bg-aligno-400/50 transition rounded-md"
           >
-            <Link href={`/workspace/${workspace.id}`} className="p-2">
-              {workspace.title}
-            </Link>
+            <PopoverClose asChild>
+              <Link href={`/workspace/${workspace.id}`} className="p-2">
+                {workspace.title}
+              </Link>
+            </PopoverClose>
           </div>
         ))}
 

@@ -1,7 +1,7 @@
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import db from "@/lib/db";
 import { redirect } from "next/navigation";
-import NavItem from "./Nav-Item";
+import NavList from "./NavList";
 
 const Navbar = async () => {
   const { getUser } = await getKindeServerSession();
@@ -39,7 +39,7 @@ const Navbar = async () => {
 
   return (
     <nav className="h-[3rem] px-4 flex items-center w-full justify-between bg-aligno-700 border-b-aligno-600 border border-transparent">
-      <NavItem workspaces={workspaces} user={user} favorBoards={favorBoards} />
+      <NavList workspaces={workspaces} user={user} favorBoards={favorBoards} />
     </nav>
   );
 };

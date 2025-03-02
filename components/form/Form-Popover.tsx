@@ -7,7 +7,6 @@ import {
 } from "@/components/ui/popover";
 import { X } from "lucide-react";
 import { Button } from "../ui/button";
-import { Input } from "../ui/input";
 import { Label } from "../ui/label";
 import SubmitButton from "../SubmitButton";
 import { Controller, useForm } from "react-hook-form";
@@ -24,6 +23,7 @@ import { useRouter } from "next/navigation";
 import { usePremiumModal } from "@/hook/usePremiumModal";
 import { useKindeAuth } from "@kinde-oss/kinde-auth-nextjs";
 import { FormInput } from "./Form-Input";
+
 interface WorkspaceProps {
   id: string;
   title: string;

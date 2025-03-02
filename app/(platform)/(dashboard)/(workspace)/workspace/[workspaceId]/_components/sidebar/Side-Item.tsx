@@ -62,8 +62,8 @@ const SideItem = ({ workspace, workspaces }: SidebarClientProps) => {
 
   return (
     <div
-      className={`h-[calc(100vh-3rem)] bg-aligno-700 relative w-64 shrink-0  flex flex-col transition-all duration-100 border border-aligno-600 border-l-transparent ${
-        isCollapsed ? "w-8" : "w-64"
+      className={`min-h-[calc(100vh-3rem)] bg-aligno-700 relative w-64 shrink-0  flex flex-col transition-all duration-100 border border-aligno-600 border-b-transparent border-l-transparent ${
+        isCollapsed ? "w-[20px]" : "w-64"
       }`}
     >
       {/* 收合按鈕 */}

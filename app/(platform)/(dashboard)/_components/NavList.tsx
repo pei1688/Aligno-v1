@@ -1,14 +1,15 @@
 import Link from "next/link";
 
-import { Plus } from "lucide-react";
+import { ChevronDown, Plus } from "lucide-react";
 import Image from "next/image";
 import FormPopover from "@/components/form/Form-Popover";
 import UserProfile from "./UserProfile";
 import { Suspense } from "react";
 
-import NavWorkspace from "./Nav-Workspace";
-import NavFavoriteItem from "./Nav-FavoriteItem";
+import NavWorkspace from "./NavWorkspace";
+import NavFavoriteItem from "./NavFavoriteItem";
 import Spinner from "@/components/Spinner";
+import NavMobile from "./NavMobile";
 
 interface WorkspaceProps {
   id: string;
@@ -33,7 +34,7 @@ export interface UserProps {
   email: string | null;
 }
 
-const NavItem = ({
+const NavList = ({
   workspaces,
   user,
   favorBoards,
@@ -44,7 +45,7 @@ const NavItem = ({
 }) => {
   return (
     <div className="flex justify-between items-center w-full">
-      <div className="flex justify-center items-center gap-8">
+      <div className="flex justify-center items-center gap-6 sm:gap-8 ">
         <Link href="/workspace" className="text-xl flex items-center gap-4">
           <div className="relative h-[20px] w-[40px]">
             <Image
@@ -60,15 +61,16 @@ const NavItem = ({
         {/*工作區*/}
         <NavWorkspace workspaces={workspaces} />
         {/*已標上星號*/}
-        <Suspense fallback={<Spinner />}>
-          <NavFavoriteItem favorBoards={favorBoards} />
-        </Suspense>
+          <Suspense fallback={<Spinner />}>
+            <NavFavoriteItem favorBoards={favorBoards} />
+          </Suspense>
+
         {/*建立看板*/}
         <FormPopover sideOffset={5} side="bottom" workspaces={workspaces}>
-          <p className="text-sm cursor-pointer bg-aligno-600 px-2 p-1 sm:p-1 rounded-sm hover:bg-aligno-500 ">
+          <div className="text-sm cursor-pointer bg-aligno-600 px-2 p-1 sm:p-1 rounded-sm hover:bg-aligno-500 border-2 border-focusInput">
             <span className="sm:block hidden">建立新的看板</span>
             <Plus className="h-4 w-4 sm:hidden block" />
-          </p>
+          </div>
         </FormPopover>
       </div>
       <div className="flex gap-4 items-center">
@@ -78,4 +80,4 @@ const NavItem = ({
   );
 };
 
-export default NavItem;
+export default NavList;

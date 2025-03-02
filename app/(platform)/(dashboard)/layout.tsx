@@ -1,4 +1,4 @@
-import Navbar from "./_components/Nav-Bar";
+import Navbar from "./_components/NavBar";
 
 const DashLayout = async ({ children }: { children: React.ReactNode }) => {
   return (

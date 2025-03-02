@@ -3,7 +3,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { ChevronDown } from "lucide-react";
+import { ChevronDown, Star } from "lucide-react";
 import FavorBoardItem from "../(workspace)/workspace/_components/FavorBoardItem";
 
 export interface FavorBoardProps {
@@ -23,8 +23,9 @@ const NavFavoriteItem = async ({
 }) => {
   return (
     <Popover>
-      <PopoverTrigger className="px-4 py-1 font-semibold text-sm hover:bg-aligno-600/50 rounded-sm transition flex items-center">
-        已標上星號
+      <PopoverTrigger className="px-4 py-1 font-semibold text-sm hover:bg-aligno-600/50 rounded-sm transition flex items-center sm:bg-transparent bg-aligno-600">
+        <Star className="size-4 mr-1"/>
+        <div className="hidden sm:flex sm:mr-1 ">已標上星號</div>
         <ChevronDown className="h-4 w-4" />
       </PopoverTrigger>
       <PopoverContent align="start" className="px-4 py-3 h-full">
