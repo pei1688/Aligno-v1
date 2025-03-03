@@ -24,7 +24,7 @@ const WorkspaceInfo = async ({ workspaceId}: WorkProps) => {
   const isPremium = await subscription(workspaceId);
   return (
     <div className="flex flex-col">
-      <div className="flex items-center gap-x-4">
+      <div className="flex items-center gap-x-4 flex-wrap">
         <div className="w-[60px] h-[60px] relative sm:w-[80px] sm:h-[80px]">
           <Image
             src={"https://avatar.vercel.sh/rauchg"}

@@ -25,9 +25,11 @@ const WorkspaceIdLayout = async ({
   params: { workspaceId: string };
 }) => {
   return (
-    <div className="flex gap-x-7">
-      <Sidebar workspaceId={params.workspaceId} />
-      <div className="flex-1 md:flex-[3] lg:flex-[4]">{children}</div>
+    <div className="flex w-full h-full overflow-hidden">
+      <div className="flex-shrink-0 ">
+        <Sidebar workspaceId={params.workspaceId} />
+      </div>
+      <div className="flex-1 min-w-0 overflow-x-auto">{children}</div>
     </div>
   );
 };
