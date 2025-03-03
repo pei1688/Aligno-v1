@@ -5,6 +5,7 @@ import { LogoutLink } from "@kinde-oss/kinde-auth-nextjs/components";
 import { LogOut } from "lucide-react";
 import {
   Popover,
+  PopoverClose,
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
@@ -55,7 +56,9 @@ const UserProfile = ({ user }: { user: UserProps }) => {
           size="none"
           className="w-full p-1 flex items-center"
         >
-          <Link href={"/user"}>個人檔案</Link>
+          <PopoverClose asChild>
+            <Link href={"/user"}>個人檔案</Link>
+          </PopoverClose>
         </Button>
         <Separator className="my-4 border-white/30 border-t-[0.5px] border-solid" />
         <Button

@@ -65,35 +65,40 @@ const BoardTitleForm = ({ title, id }: BoardTitleProps) => {
     });
   };
 
-  return isEditing ? (
-    <form onSubmit={handleSubmit(onSubmit)} className="flex items-center px-2 ">
-      <Controller
-        name="title"
-        control={control}
-        render={({ field }) => (
-          <FormInput
-            id="title"
-            disabled={isPending}
-            className="px-[7px] p-1 h-7 bg-transparent border-2 border-transparent focus:border-focusInput text-base font-semibold transition-all"
-            onCustomBlur={async () => {
-              const isValid = await trigger("title");
-              if (isValid) {
-                handleSubmit(onSubmit)();
-              }
-            }}
-            {...field}
+  return (
+    <div className="text-sm font-semibold flex justify-between items-start gap-x-2">
+      {isEditing ? (
+        <form onSubmit={handleSubmit(onSubmit)} className="flex items-center ">
+          <Controller
+            name="title"
+            control={control}
+            render={({ field }) => (
+              <FormInput
+                id="title"
+                disabled={isPending}
+                className="w-full min-h-[36px] px-4 bg-transparent bg-aligno-600 border border-transparent focus:border-focusInput text-base font-semibold transition-all"
+                onCustomBlur={async () => {
+                  const isValid = await trigger("title");
+                  if (isValid) {
+                    handleSubmit(onSubmit)();
+                  }
+                }}
+                {...field}
+              />
+            )}
           />
-        )}
-      />
-      <ErrorMessage errormessage={errors.title?.message} />
-    </form>
-  ) : (
-    <div
-      role="button"
-      onClick={enableEditing}
-      className="font-bold text-lg size-auto p-1 px-3 truncate max-w-[300px] w-full border-2 border-transparent cursor-pointer flex items-center "
-    >
-      <span className="block w-full text-base font-semibold">{title}</span>
+          <ErrorMessage errormessage={errors.title?.message} />
+        </form>
+      ) : (
+        <div
+          role="button"
+          onClick={enableEditing}
+          className="w-full min-h-[36px] px-4 font-semibold border border-transparent cursor-pointer flex items-center truncate min-w-[300px]"
+        >
+          <span className="block w-full text-base font-semibold">{title}</span>
+        </div>
+      )}
+      
     </div>
   );
 };
