@@ -25,7 +25,7 @@ const WorkspaceIdLayout = async ({
   params: { workspaceId: string };
 }) => {
   return (
-    <div className="flex w-full h-screen overflow-hidden">
+    <div className="flex w-full min-h-[calc(100vh-10rem)] sm:h-full overflow-hidden">
       <div className="flex-shrink-0 ">
         <Sidebar workspaceId={params.workspaceId} />
       </div>
