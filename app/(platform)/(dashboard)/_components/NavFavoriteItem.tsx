@@ -23,15 +23,15 @@ const NavFavoriteItem = async ({
 }) => {
   return (
     <Popover>
-      <PopoverTrigger className="px-4 py-1 font-semibold text-sm hover:bg-aligno-600/50 rounded-sm transition flex items-center sm:bg-transparent bg-aligno-600">
-        <Star className="size-4 mr-1"/>
-        <div className="hidden sm:flex sm:mr-1 ">已標上星號</div>
+      <PopoverTrigger className="flex items-center rounded-sm bg-aligno-600 px-4 py-1 text-sm font-semibold transition hover:bg-aligno-600/50 sm:bg-transparent">
+        <Star className="mr-1 size-4" />
+        <div className="hidden sm:mr-1 sm:flex">已標上星號</div>
         <ChevronDown className="h-4 w-4" />
       </PopoverTrigger>
-      <PopoverContent align="start" className="px-4 py-3 h-full">
+      <PopoverContent align="start" className="h-full px-4 py-3">
         <div className="flex">
           {favorBoards.length > 0 ? (
-            <div className="flex flex-wrap gap-4 w-full ">
+            <div className="flex w-full flex-wrap gap-4">
               {favorBoards.map((board) => (
                 <FavorBoardItem
                   key={board.id}
@@ -44,7 +44,7 @@ const NavFavoriteItem = async ({
               ))}
             </div>
           ) : (
-            <p className="text-sm text-aligno-300 px-2">沒有收藏的看板</p>
+            <p className="px-2 text-sm text-aligno-300">沒有收藏的看板</p>
           )}
         </div>
       </PopoverContent>

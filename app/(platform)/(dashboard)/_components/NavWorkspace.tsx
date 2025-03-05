@@ -21,20 +21,20 @@ const NavWorkspace = ({ workspaces }: { workspaces: NavWorkspaceProps[] }) => {
 
   return (
     <Popover>
-      <PopoverTrigger className="px-4 py-1 font-semibold text-sm hover:bg-aligno-600/50 rounded-sm transition flex items-center sm:bg-transparent bg-aligno-600">
-        <SquareKanban className="size-4 mr-1"/>
-        <div className="hidden sm:flex sm:mr-1">工作區</div>
+      <PopoverTrigger className="flex items-center rounded-sm bg-aligno-600 px-4 py-1 text-sm font-semibold transition hover:bg-aligno-600/50 sm:bg-transparent">
+        <SquareKanban className="mr-1 size-4" />
+        <div className="hidden sm:mr-1 sm:flex">工作區</div>
         <ChevronDown className="h-4 w-4" />
       </PopoverTrigger>
       <PopoverContent align="start" className="px-4 py-3">
-        <div className="text-sm font-medium text-start text-aligno-300 p-2 ">
+        <div className="p-2 text-start text-sm font-medium text-aligno-300">
           您的工作區
         </div>
-        <Separator className="my-2 border-aligno-400/50 border-t-[0.5px] border-solid" />
+        <Separator className="my-2 border-t-[0.5px] border-solid border-aligno-400/50" />
         {workspaces.map((workspace) => (
           <div
             key={workspace.id}
-            className="flex flex-col my-2 text-aligno-200 hover:bg-aligno-400/50 transition rounded-md"
+            className="my-2 flex flex-col rounded-md text-aligno-200 transition hover:bg-aligno-400/50"
           >
             <PopoverClose asChild>
               <Link href={`/workspace/${workspace.id}`} className="p-2">
@@ -46,7 +46,7 @@ const NavWorkspace = ({ workspaces }: { workspaces: NavWorkspaceProps[] }) => {
 
         <Button
           variant="transparent"
-          className="w-full p-2 bg-aligno-500 justify-center"
+          className="w-full justify-center bg-aligno-500 p-2"
           size="none"
           onClick={wsModal.onOpen}
         >

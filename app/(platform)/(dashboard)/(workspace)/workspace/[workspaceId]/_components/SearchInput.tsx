@@ -12,7 +12,7 @@ const SearchInput = () => {
   const router = useRouter();
 
   const [searchValue, setSearchValue] = useState(
-    searchParams.get("board") || ""
+    searchParams.get("board") || "",
   );
 
   useEffect(() => {
@@ -44,17 +44,17 @@ const SearchInput = () => {
         <Input
           type="text"
           placeholder="搜尋看板"
-          className="p-2 pl-8 h-[36px] bg-transparent relative border border-aligno-300 outline-none focus:border-focusInput focus:ring-2 focus:ring-focusInput duration-300"
+          className="relative h-[36px] border border-aligno-300 bg-transparent p-2 pl-8 outline-none duration-300 focus:border-focusInput focus:ring-2 focus:ring-focusInput"
           onChange={(e) => {
             setSearchValue(e.target.value); //即時更新
             debounceSearch(e.target.value);
           }}
           value={searchValue}
         />
-        <Search className="h-4 w-4 absolute top-2.5 left-2" />
+        <Search className="absolute left-2 top-2.5 h-4 w-4" />
         {searchValue && (
           <X
-            className="h-4 w-4 absolute top-2.5 right-2 cursor-pointer"
+            className="absolute right-2 top-2.5 h-4 w-4 cursor-pointer"
             onClick={clearSearch}
           />
         )}

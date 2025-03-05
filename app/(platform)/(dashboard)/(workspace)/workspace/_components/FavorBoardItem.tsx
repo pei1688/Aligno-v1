@@ -22,23 +22,23 @@ const FavorBoardItem = ({
 }: FavorBoardItemProps) => {
   const { optimisticFavorite, handleToggleFavorite } = useFavorToggle(
     id,
-    isFavorite
+    isFavorite,
   );
 
   if (!optimisticFavorite) return null;
   return (
-    <div className="flex items-center justify-between w-full  hover:bg-aligno-400/50 rounded-sm transition-all py-1 px-4  cursor-pointer group">
+    <div className="group flex w-full cursor-pointer items-center justify-between rounded-sm px-4 py-1 transition-all hover:bg-aligno-400/50">
       <Link href={`/board/${id}`} className="flex items-center">
-        <div className="relative h-[25px] w-[40px] rounded-sm overflow-hidden">
+        <div className="relative h-[25px] w-[40px] overflow-hidden rounded-sm">
           <Image
             src={image}
             alt={title}
             sizes="auto"
-            className="object-cover w-full h-full"
+            className="h-full w-full object-cover"
             fill
           />
         </div>
-        <div className="font-semibold text-aligno-200 px-2 text-sm truncate max-w-[150px] flex flex-col">
+        <div className="flex max-w-[150px] flex-col truncate px-2 text-sm font-semibold text-aligno-200">
           <span>{title}</span>
           <span className="text-[10px] text-aligno-300">{workspace}</span>
         </div>
@@ -46,10 +46,10 @@ const FavorBoardItem = ({
       {/* 收藏按鈕 */}
       <button onClick={handleToggleFavorite}>
         <Star
-          className={`h-5 w-5 transition opacity-0 group-hover:opacity-100  ${
+          className={`h-5 w-5 opacity-0 transition group-hover:opacity-100 ${
             optimisticFavorite
-              ? "fill-yellow-500 text-yellow-500 hover:fill-transparent opacity-100"
-              : "hover:fill-aligno-300 text-aligno-300"
+              ? "fill-yellow-500 text-yellow-500 opacity-100 hover:fill-transparent"
+              : "text-aligno-300 hover:fill-aligno-300"
           }`}
         />
       </button>

@@ -86,10 +86,10 @@ const Description = ({ card }: DescriptionProps) => {
   };
 
   return (
-    <div className="flex items-start gap-x-3 w-full text-neutral-100/70">
-      <Text className="h-5 w-5 mt-0.5 " />
+    <div className="flex w-full items-start gap-x-3 text-neutral-100/70">
+      <Text className="mt-0.5 h-5 w-5" />
       <div className="w-full">
-        <p className="font-semibold mb-4">描述</p>
+        <p className="mb-4 font-semibold">描述</p>
         {isEditing ? (
           <form
             onSubmit={handleSubmit(onSubmit)}
@@ -100,7 +100,7 @@ const Description = ({ card }: DescriptionProps) => {
               id="description"
               placeholder="請輸入描述..."
               register={register}
-              className="bg-aligno-600 border-aligno-500"
+              className="border-aligno-500 bg-aligno-600"
             />
             <ErrorMessage errormessage={errors.description?.message} />
             <div className="flex items-center gap-x-4">
@@ -124,7 +124,7 @@ const Description = ({ card }: DescriptionProps) => {
           <div
             role="button"
             onClick={enableEditing}
-            className="text-sm font-medium py-3"
+            className="py-3 text-sm font-medium"
           >
             {card.description || "新增更詳細的描述..."}
           </div>

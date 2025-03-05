@@ -60,11 +60,11 @@ const Header = ({ card }: HeaderProps) => {
     });
   };
   return (
-    <div className="flex items-center gap-x-3 mb-6 w-full text-aligno-300">
+    <div className="mb-6 flex w-full items-center gap-x-3 text-aligno-300">
       <div className="w-full">
         <form
           onSubmit={handleSubmit(onSubmit)}
-          className="flex items-center gap-2 mb-2 relative"
+          className="relative mb-2 flex items-center gap-2"
         >
           <Input type="hidden" defaultValue={card.id} {...register("id")} />
           <Input
@@ -72,7 +72,7 @@ const Header = ({ card }: HeaderProps) => {
             defaultValue={params.boardId}
             {...register("boardId")}
           />
-          <div className="flex items-center gap-2 ">
+          <div className="flex items-center gap-2">
             <Layout className="h-4 w-4" />
             <Controller
               name="title"
@@ -82,7 +82,7 @@ const Header = ({ card }: HeaderProps) => {
                   id="title"
                   defaultValue={card.title}
                   disabled={isPending}
-                  className="font-semibold text-xl px-1 h-auto bg-transparent border-transparent relative -left-1.5 w-[95%] focus-visible:bg-neutral-800 focus-visible:border-input truncate"
+                  className="relative -left-1.5 h-auto w-[95%] truncate border-transparent bg-transparent px-1 text-xl font-semibold focus-visible:border-input focus-visible:bg-neutral-800"
                   onCustomBlur={async () => {
                     const isValid = await trigger("title");
                     if (isValid) {
@@ -98,9 +98,9 @@ const Header = ({ card }: HeaderProps) => {
           </div>
           <ErrorMessage errormessage={errors.title?.message} />
         </form>
-        <p className="text-sm text-aligno-300 ml-6">
+        <p className="ml-6 text-sm text-aligno-300">
           位於{" "}
-          <span className=" bg-orange-300 text-orange-900 px-2 rounded-sm">
+          <span className="rounded-sm bg-orange-300 px-2 text-orange-900">
             {card.list.title}
           </span>{" "}
           列表

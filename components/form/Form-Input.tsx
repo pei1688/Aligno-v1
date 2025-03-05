@@ -8,7 +8,7 @@ interface FormInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   id: string;
   disabled?: boolean;
   onBlur?: () => void;
-  onCustomBlur?: () => void; 
+  onCustomBlur?: () => void;
   onKeyDown?: (e: React.KeyboardEvent<HTMLInputElement>) => void;
   className?: string;
   placeholder?: string;
@@ -22,7 +22,7 @@ export const FormInput = forwardRef<HTMLInputElement, FormInputProps>(
       id,
       disabled,
       onBlur,
-      onCustomBlur, 
+      onCustomBlur,
       onKeyDown,
       className,
       placeholder,
@@ -30,7 +30,7 @@ export const FormInput = forwardRef<HTMLInputElement, FormInputProps>(
       onChange,
       ...rest
     },
-    ref
+    ref,
   ) => {
     const inputRef = useRef<HTMLInputElement | null>(null);
 
@@ -70,7 +70,7 @@ export const FormInput = forwardRef<HTMLInputElement, FormInputProps>(
         />
       </>
     );
-  }
+  },
 );
 
 FormInput.displayName = "FormInput";

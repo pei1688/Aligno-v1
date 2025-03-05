@@ -13,18 +13,18 @@ interface UserProps {
 const CreateWorkspace = ({ user }: UserProps) => {
   const wsModal = useCreateWorkspaceFormModal();
   return (
-    <div className="w-full  lg:w-[600px] space-y-4 ">
-      <div className=" w-full h-[300px]">
-        <div className="relative w-full h-full">
+    <div className="w-full space-y-4 lg:w-[600px]">
+      <div className="h-[300px] w-full">
+        <div className="relative h-full w-full">
           <Image
             src={"/img/work.jpg"}
             alt="work"
             sizes="auto"
-            className="object-cover rounded-md shadow-md"
+            className="rounded-md object-cover shadow-md"
             fill
           />
-          <p className="absolute top-36 left-6 text-aligno-600 font-semibold">
-            <span className=" text-3xl">ALIGNO</span>
+          <p className="absolute left-6 top-36 font-semibold text-aligno-600">
+            <span className="text-3xl">ALIGNO</span>
             <br />
             <span className="text-md">打造屬於你的待辦事項🙂</span>
             <br />
@@ -32,16 +32,16 @@ const CreateWorkspace = ({ user }: UserProps) => {
           </p>
         </div>
       </div>
-      <h2 className="text-xl md:text-2xl font-semibold text-aligno-200">
+      <h2 className="text-xl font-semibold text-aligno-200 md:text-2xl">
         歡迎回來,{user.given_name}
         {user.family_name}
       </h2>
-      <Separator className="my-8 border-aligno-400/50 border-t-[0.5px] border-solid" />
+      <Separator className="my-8 border-t-[0.5px] border-solid border-aligno-400/50" />
       <div className="flex items-center">
-        <p className=" text-lg">立即建立屬於你的工作區!</p>
+        <p className="text-lg">立即建立屬於你的工作區!</p>
         <Button
           variant="link"
-          className="text-lime-500 text-lg font-semibold"
+          className="text-lg font-semibold text-lime-500"
           onClick={wsModal.onOpen}
         >
           建立工作區

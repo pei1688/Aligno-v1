@@ -53,14 +53,14 @@ const FormPicker = ({
   if (isLoading) {
     return (
       <div className="flex justify-center p-6">
-        <Loader2 className="animate-spin size-6 text-aligno-200" />
+        <Loader2 className="size-6 animate-spin text-aligno-200" />
       </div>
     );
   }
 
   return (
     <div className="relative">
-      <div className="grid grid-cols-3 gap-2 mb-4">
+      <div className="mb-4 grid grid-cols-3 gap-2">
         {images.map((image) => {
           const imageValue = `${image.id}|${image.urls.thumb}|${image.urls.full}|${image.links.html}|${image.user.name}`;
 
@@ -73,7 +73,7 @@ const FormPicker = ({
                 setValue("image", imageValue); // 手動設置表單值
               }}
               className={cn(
-                "cursor-pointer rounded-sm aspect-video relative hover:opacity-75 transition bg-muted group"
+                "group relative aspect-video cursor-pointer rounded-sm bg-muted transition hover:opacity-75",
               )}
             >
               <Input
@@ -90,19 +90,19 @@ const FormPicker = ({
               <Image
                 fill
                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                className="object-cover rounded-sm"
+                className="rounded-sm object-cover"
                 alt="Unsplash image"
                 src={image.urls.thumb}
               />
               {selectedImageId === image.id && (
-                <div className="absolute size-full bg-black/30 flex items-center justify-center rounded-sm">
+                <div className="absolute flex size-full items-center justify-center rounded-sm bg-black/30">
                   <Check className="size-6 text-white" />
                 </div>
               )}
               <Link
                 href={image.links.html}
                 target="_blank"
-                className="opacity-0 group-hover:opacity-100 absolute bottom-0 w-full text-[10px] truncate text-white p-1 bg-black/50 hover:underline"
+                className="absolute bottom-0 w-full truncate bg-black/50 p-1 text-[10px] text-white opacity-0 hover:underline group-hover:opacity-100"
               >
                 {image.user.name}
               </Link>

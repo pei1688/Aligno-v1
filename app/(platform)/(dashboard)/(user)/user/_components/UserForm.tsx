@@ -59,12 +59,12 @@ const UserForm = ({
     });
   };
   return (
-    <div className="px-16 flex flex-col space-y-4 max-w-2xl w-full mx-auto">
-      <h2 className="font-semibold text-3xl">管理你的個人資料</h2>
-      <Separator className="my-4 border-white/30 border-t-[0.5px] border-solid" />
+    <div className="mx-auto flex w-full max-w-2xl flex-col space-y-4 px-16">
+      <h2 className="text-3xl font-semibold">管理你的個人資料</h2>
+      <Separator className="my-4 border-t-[0.5px] border-solid border-white/30" />
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
         <div className="flex gap-6">
-          <div className="flex flex-col space-y-2 flex-1">
+          <div className="flex flex-1 flex-col space-y-2">
             <Controller
               name="firstName"
               control={control}
@@ -80,7 +80,7 @@ const UserForm = ({
             />
           </div>
           <ErrorMessage errormessage={errors.firstName?.message} />
-          <div className="flex flex-col space-y-2 flex-1">
+          <div className="flex flex-1 flex-col space-y-2">
             <Controller
               name="lastName"
               control={control}

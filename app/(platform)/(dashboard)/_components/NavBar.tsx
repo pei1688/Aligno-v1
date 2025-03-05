@@ -38,7 +38,7 @@ const Navbar = async () => {
   });
 
   return (
-    <nav className="h-[3rem] px-4 flex items-center w-full justify-between bg-aligno-700 border-b-aligno-600 border border-transparent">
+    <nav className="flex h-[3rem] w-full items-center justify-between border border-transparent border-b-aligno-600 bg-aligno-700 px-4">
       <NavList workspaces={workspaces} user={user} favorBoards={favorBoards} />
     </nav>
   );

@@ -25,10 +25,10 @@ const SortFilter = () => {
     <div className="mb-2">
       <Label className="">排序依據</Label>
       <Select onValueChange={handleSortChange} defaultValue="NC-OC">
-        <SelectTrigger className="w-[180px] bg-transparent focus:ring-2 focus:ring-focusInput duration-300 ">
+        <SelectTrigger className="w-[180px] bg-transparent duration-300 focus:ring-2 focus:ring-focusInput">
           <SelectValue placeholder="選擇排序" />
         </SelectTrigger>
-        <SelectContent className="bg-aligno-600 border-aligno-500 shadow-lg text-aligno-300 ">
+        <SelectContent className="border-aligno-500 bg-aligno-600 text-aligno-300 shadow-lg">
           <SelectItem value="NC-OC">依建立時間排序</SelectItem>
           <SelectItem value="A-Z">依字母A-Z排序</SelectItem>
           <SelectItem value="Z-A">依字母Z-A排序</SelectItem>

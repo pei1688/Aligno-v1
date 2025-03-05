@@ -6,20 +6,17 @@ import Image from "next/image";
 import { useKindeBrowserClient } from "@kinde-oss/kinde-auth-nextjs";
 
 const Navbar = () => {
-  const { user } = useKindeBrowserClient()
-  
-  
+  const { user } = useKindeBrowserClient();
+
   return (
-    <nav className="h-[3rem] flex items-center w-full justify-between bg-aligno-800">
-      <Link href="/" className="text-2xl flex items-center gap-4">
+    <nav className="flex h-[3rem] w-full items-center justify-between bg-aligno-800">
+      <Link href="/" className="flex items-center gap-4 text-2xl">
         <Image src={"/logo.svg"} alt="logo" width={35} height={35} />
         <h1 className="font-semibold">ALIGNO</h1>
       </Link>
       {user ? (
         <Link href={"/workspace"}>
-          <Button variant="transparent">
-            前往您的工作區
-          </Button>
+          <Button variant="transparent">前往您的工作區</Button>
         </Link>
       ) : (
         <Button asChild variant="transparent">

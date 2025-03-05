@@ -32,7 +32,7 @@ const Activity = ({ id }: ActivityProps) => {
 
   if (!activity || activity.length === 0) {
     return (
-      <div className="flex items-center justify-center h-[300px] text-aligno-300">
+      <div className="flex h-[300px] items-center justify-center text-aligno-300">
         <p>尚無活動紀錄</p>
       </div>
     );
@@ -41,10 +41,10 @@ const Activity = ({ id }: ActivityProps) => {
   const actToDisplay = showAll ? activity : activity.slice(0, 1);
 
   return (
-    <div  className="flex flex-col items-start w-full text-aligno-300 min-h-[300px]">
-      <div className="flex items-center justify-between w-full">
+    <div className="flex min-h-[300px] w-full flex-col items-start text-aligno-300">
+      <div className="flex w-full items-center justify-between">
         <div className="flex items-center gap-3">
-          <ChartNoAxesGantt className="h-5 w-5 mt-0.5 " />
+          <ChartNoAxesGantt className="mt-0.5 h-5 w-5" />
           <p className="font-semibold">活動</p>
         </div>
         <Button
@@ -56,7 +56,7 @@ const Activity = ({ id }: ActivityProps) => {
           {showAll ? "隱藏活動" : "顯示所有活動"}
         </Button>
       </div>
-      <div className="w-full max-h-[250px] overflow-auto">
+      <div className="max-h-[250px] w-full overflow-auto">
         <ol className="mt-2 space-y-4">
           {actToDisplay.map((act) => (
             <ActivityItem key={act.id} act={act} />

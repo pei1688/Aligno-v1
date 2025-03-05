@@ -32,13 +32,13 @@ const UserProfile = ({ user }: { user: UserProps }) => {
         </Avatar>
       </PopoverTrigger>
       <PopoverContent align="end" className="py-6 text-aligno-300">
-        <h2 className="my-4 text-xs px-1">帳號</h2>
-        <div className="px-1 flex gap-x-4">
-          <Avatar className="w-12 h-12">
+        <h2 className="my-4 px-1 text-xs">帳號</h2>
+        <div className="flex gap-x-4 px-1">
+          <Avatar className="h-12 w-12">
             <AvatarImage
               src={user?.picture || "/default-avatar.png"}
               alt="@shadcn"
-              className="w-full h-full object-cover"
+              className="h-full w-full object-cover"
             />
             <AvatarFallback>{user.given_name}</AvatarFallback>
           </Avatar>
@@ -49,26 +49,26 @@ const UserProfile = ({ user }: { user: UserProps }) => {
             <span className="text-xs"> {user.email}</span>
           </p>
         </div>
-        <Separator className="my-4 border-white/30 border-t-[0.5px] border-solid" />
+        <Separator className="my-4 border-t-[0.5px] border-solid border-white/30" />
         <Button
           asChild
           variant="transparent"
           size="none"
-          className="w-full p-1 flex items-center"
+          className="flex w-full items-center p-1"
         >
           <PopoverClose asChild>
             <Link href={"/user"}>個人檔案</Link>
           </PopoverClose>
         </Button>
-        <Separator className="my-4 border-white/30 border-t-[0.5px] border-solid" />
+        <Separator className="my-4 border-t-[0.5px] border-solid border-white/30" />
         <Button
           asChild
           variant="transparent"
           size="none"
-          className="w-full p-1 flex items-center"
+          className="flex w-full items-center p-1"
         >
           <LogoutLink>
-            <LogOut className="w-4 h-4" />
+            <LogOut className="h-4 w-4" />
             登出
           </LogoutLink>
         </Button>

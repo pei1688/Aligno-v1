@@ -7,7 +7,7 @@ import Image from "next/image";
 interface WorkProps {
   workspaceId: string;
 }
-const WorkspaceInfo = async ({ workspaceId}: WorkProps) => {
+const WorkspaceInfo = async ({ workspaceId }: WorkProps) => {
   const { getUser } = getKindeServerSession();
   const user = await getUser();
 
@@ -19,13 +19,13 @@ const WorkspaceInfo = async ({ workspaceId}: WorkProps) => {
     },
   });
   if (!workspace) {
-    return <p className="text-gray-500 text-center">工作區不存在</p>;
+    return <p className="text-center text-gray-500">工作區不存在</p>;
   }
   const isPremium = await subscription(workspaceId);
   return (
     <div className="flex flex-col">
-      <div className="flex items-center gap-x-4 flex-wrap">
-        <div className="w-[60px] h-[60px] relative sm:w-[80px] sm:h-[80px]">
+      <div className="flex flex-wrap items-center gap-x-4">
+        <div className="relative h-[60px] w-[60px] sm:h-[80px] sm:w-[80px]">
           <Image
             src={"https://avatar.vercel.sh/rauchg"}
             alt="vercel"
@@ -34,16 +34,16 @@ const WorkspaceInfo = async ({ workspaceId}: WorkProps) => {
             fill
           />
         </div>
-        <div className="space-y-1 flex flex-col">
-          <p className="font-semibold text-xl sm:text-2xl">{workspace.title}</p>
+        <div className="flex flex-col space-y-1">
+          <p className="text-xl font-semibold sm:text-2xl">{workspace.title}</p>
           <div className="flex items-center text-xs text-muted-foreground">
-            <CreditCard className="h-3 w-3 mr-1" />
+            <CreditCard className="mr-1 h-3 w-3" />
             {isPremium ? "Premium" : "免費"}
           </div>
         </div>
       </div>
       {workspace.description && (
-        <div className="text-sm mt-2 sm:text-base">{workspace.description}</div>
+        <div className="mt-2 text-sm sm:text-base">{workspace.description}</div>
       )}
     </div>
   );

@@ -32,7 +32,7 @@ const CardModal = () => {
       <DialogDescription />
       <DialogContent onOpenAutoFocus={(e) => e.preventDefault()}>
         {!CardData ? (
-          <div className="flex justify-center items-center min-h-40">
+          <div className="flex min-h-40 items-center justify-center">
             <Spinner />
           </div>
         ) : (

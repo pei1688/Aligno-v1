@@ -21,9 +21,11 @@ export const Action = ({ card }: ActionProps) => {
   const [isPending, startTransition] = useTransition();
   const cardModal = useCardModal();
   const params = useParams();
-  const {
-    handleSubmit,
-  } = useForm<{ title: string; id: string; boardId: string }>({
+  const { handleSubmit } = useForm<{
+    title: string;
+    id: string;
+    boardId: string;
+  }>({
     resolver: zodResolver(DeleteOrCopyCardSchema),
     defaultValues: { id: card.id, boardId: params.boardId as string },
   });
@@ -67,29 +69,28 @@ export const Action = ({ card }: ActionProps) => {
     });
   };
   return (
-    <div className="text-aligno-300 space-y-2">
-      <p className="text-xs font-semibold ">動作</p>
+    <div className="space-y-2 text-aligno-300">
+      <p className="text-xs font-semibold">動作</p>
       <Button
-        className="flex items-center gap-x-2 "
+        className="flex items-center gap-x-2"
         size="action"
         variant="gray"
         onClick={handleSubmit(onCopy)}
         disabled={isPending}
       >
-        <Files className="w-4 h-4" />
+        <Files className="h-4 w-4" />
         複製
       </Button>
       <Button
-        className="flex items-center gap-x-2 "
+        className="flex items-center gap-x-2"
         size="action"
         variant="gray"
         onClick={handleSubmit(onDelete)}
         disabled={isPending}
       >
-        <Trash className="w-4 h-4" />
+        <Trash className="h-4 w-4" />
         刪除
       </Button>
     </div>
   );
 };
-

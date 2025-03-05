@@ -42,7 +42,7 @@ const FavorBoardList = async ({ id }: User) => {
           ))}
         </div>
       ) : (
-        <p className="text-sm text-aligno-300 px-2">沒有收藏的看板</p>
+        <p className="px-2 text-sm text-aligno-300">沒有收藏的看板</p>
       )}
     </>
   );

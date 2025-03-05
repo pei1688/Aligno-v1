@@ -2,7 +2,7 @@ import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 
 import { redirect } from "next/navigation";
 import db from "@/lib/db";
-import SideItem from "./Side-Item";
+import SideItem from "./SideBar-Item";
 
 const Sidebar = async ({ workspaceId }: { workspaceId: string }) => {
   const { getUser } = getKindeServerSession();

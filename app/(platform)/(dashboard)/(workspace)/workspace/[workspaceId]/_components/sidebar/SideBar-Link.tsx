@@ -24,8 +24,8 @@ const SideLink = ({ href, icon: Icon, label, path }: SideLinkProps) => {
       <Button
         variant="work"
         className={cn(
-          "w-full flex items-center ",
-          isActive && "bg-zinc-600/50 text-white"
+          "flex w-full items-center",
+          isActive && "bg-zinc-600/50 text-white",
         )}
       >
         {Icon && <Icon className="h-5 w-5" />}

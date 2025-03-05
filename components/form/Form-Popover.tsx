@@ -124,16 +124,16 @@ const FormPopover = ({
         side={side}
         sideOffset={sideOffset}
       >
-        <div className="text-sm font-medium text-center ">建立看板</div>
+        <div className="text-center text-sm font-medium">建立看板</div>
         <PopoverClose asChild ref={closeRef}>
           <Button
-            className="h-auto w-auto p-2 absolute top-2 right-2"
+            className="absolute right-2 top-2 h-auto w-auto p-2"
             variant="popover"
           >
-            <X className="h-4 w-4 " />
+            <X className="h-4 w-4" />
           </Button>
         </PopoverClose>
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 mt-8">
+        <form onSubmit={handleSubmit(onSubmit)} className="mt-8 space-y-4">
           <div className="space-y-4">
             <FormPicker
               id="image"
@@ -174,7 +174,7 @@ const FormPopover = ({
                   name="workspaceId"
                   value={watch("workspaceId")}
                   onChange={(e) => setValue("workspaceId", e.target.value)}
-                  className="w-full p-2 text-sm font-medium border rounded-md bg-aligno-500 focus:outline-none border-aligno-400"
+                  className="w-full rounded-md border border-aligno-400 bg-aligno-500 p-2 text-sm font-medium focus:outline-none"
                 >
                   <option value="">選擇工作區</option>
                   {workspaces?.map((workspace) => (
@@ -194,7 +194,7 @@ const FormPopover = ({
             {isPending ? "建立中..." : "建立"}
           </SubmitButton>
         </form>
-        <p className="text-xs mt-2 text-aligno-300">
+        <p className="mt-2 text-xs text-aligno-300">
           使用 Unsplash 的圖片，即表示你同意他們的{" "}
           <Link
             href={"https://unsplash.com/license"}

@@ -24,19 +24,19 @@ const WorkspaceList = async ({ id }: User) => {
         workspaces.map((workspace) => (
           <Accordion key={workspace.id} type="single" collapsible>
             <AccordionItem value={`item-${workspace.id}`}>
-              <AccordionTrigger className="hover:bg-aligno-600 px-2 rounded-md">
+              <AccordionTrigger className="rounded-md px-2 hover:bg-aligno-600">
                 {workspace.title}
               </AccordionTrigger>
 
               <Link href={`/workspace/${workspace.id}`}>
-                <AccordionContent className="px-8 flex items-center gap-2 hover:bg-aligno-600 transition rounded-lg">
+                <AccordionContent className="flex items-center gap-2 rounded-lg px-8 transition hover:bg-aligno-600">
                   <LayoutDashboard className="h-4 w-4" />
                   看板
                 </AccordionContent>
               </Link>
 
               <Link href={`/workspace/${workspace.id}/settings`}>
-                <AccordionContent className="px-8 flex items-center gap-2 hover:bg-aligno-600 transition rounded-lg">
+                <AccordionContent className="flex items-center gap-2 rounded-lg px-8 transition hover:bg-aligno-600">
                   <Settings className="h-4 w-4" />
                   設定
                 </AccordionContent>

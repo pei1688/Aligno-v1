@@ -92,11 +92,11 @@ const CreateWorkspaceModal = () => {
             placeholder="輸入工作區說明&描述..."
             errormessage={errors.description?.message}
             register={register}
-            className="px-4 my-4 bg-aligno-500 border-aligno-400 "
+            className="my-4 border-aligno-400 bg-aligno-500 px-4"
           />
           <DialogClose ref={closeRef} className="hidden" />
           <SubmitButton
-            className="w-full justify-center bg-aligno-600 mt-4 text-aligno-200"
+            className="mt-4 w-full justify-center bg-aligno-600 text-aligno-200"
             disabled={isPending}
             variant="work"
           >

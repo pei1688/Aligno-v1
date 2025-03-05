@@ -32,15 +32,15 @@ const PremiumModal = () => {
 
   return (
     <Dialog open={preModal.isOpen} onOpenChange={preModal.onClose}>
-      <DialogContent className="max-w-md p-0 overflow-hidden">
-        <div className="aspect-video flex items-center justify-center relative">
+      <DialogContent className="max-w-md overflow-hidden p-0">
+        <div className="relative flex aspect-video items-center justify-center">
           <Image src={"/img/sub.jpg"} alt="sub" className="object-cover" fill />
         </div>
-        <div className="text-aligno-200 mx-auto space-y-6 p-6">
-          <h2 className="font-semibold text-xl">升級至Aligno Premium!</h2>
+        <div className="mx-auto space-y-6 p-6 text-aligno-200">
+          <h2 className="text-xl font-semibold">升級至Aligno Premium!</h2>
           <p className="text-xs font-semibold">探索 Aligno 的精彩之處</p>
           <div className="pl-3">
-            <ul className="text-sm list-disc">
+            <ul className="list-disc text-sm">
               <li>無限制的看板</li>
               <li>進階清單</li>
               <li>管理和安全功能</li>

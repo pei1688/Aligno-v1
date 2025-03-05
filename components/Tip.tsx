@@ -23,7 +23,11 @@ const Tip = ({
     <TooltipProvider>
       <Tooltip delayDuration={0}>
         <TooltipTrigger>{children}</TooltipTrigger>
-        <TooltipContent sideOffset={sidOffset} side={side} className="text-xs max-w-[220px] break-words z-50">
+        <TooltipContent
+          sideOffset={sidOffset}
+          side={side}
+          className="z-50 max-w-[220px] break-words text-xs"
+        >
           {description}
         </TooltipContent>
       </Tooltip>

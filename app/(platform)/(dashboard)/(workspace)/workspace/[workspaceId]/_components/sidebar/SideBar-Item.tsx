@@ -14,8 +14,8 @@ import { Separator } from "@/components/ui/separator";
 import FormPopover from "@/components/form/Form-Popover";
 
 import Image from "next/image";
-import SideLink from "./Side-Link";
-import SideBoardList from "./Side-BoardList";
+import SideLink from "./SideBar-Link";
+import SideBoardList from "./SideBar-BoardList";
 
 interface BoardProps {
   id: string;
@@ -62,23 +62,23 @@ const SideItem = ({ workspace, workspaces }: SidebarClientProps) => {
 
   return (
     <div
-      className={`sm:min-h-[calc(100vh-3rem)] h-full bg-aligno-700 relative w-64 shrink-0  flex flex-col transition-all duration-100 border border-aligno-600 border-b-transparent border-l-transparent ${
+      className={`relative flex h-full w-64 shrink-0 flex-col border border-aligno-600 border-b-transparent border-l-transparent bg-aligno-700 transition-all duration-100 sm:min-h-[calc(100vh-3rem)] ${
         isCollapsed ? "w-[20px]" : "w-64"
       }`}
     >
       {/* 收合按鈕 */}
       {isCollapsed ? (
         <Button
-          className="absolute top-2 right-[-16px] bg-aligno-700 hover:bg-aligno-600 rounded-full p-1 shadow-md transition-all border border-aligno-300/70"
+          className="absolute right-[-16px] top-2 rounded-full border border-aligno-300/70 bg-aligno-700 p-1 shadow-md transition-all hover:bg-aligno-600"
           onClick={() => setIsCollapsed(!isCollapsed)}
           size="none"
         >
-          <ChevronRight className="w-8 h-5 " />
+          <ChevronRight className="h-5 w-8" />
         </Button>
       ) : (
         <div className="flex items-center justify-between">
           <div className="flex items-center px-4">
-            <div className="w-[32px] h-[32px] relative ">
+            <div className="relative h-[32px] w-[32px]">
               <Image
                 src={"https://avatar.vercel.sh/rauchg"}
                 alt="vercel"
@@ -95,15 +95,15 @@ const SideItem = ({ workspace, workspaces }: SidebarClientProps) => {
             onClick={() => setIsCollapsed(!isCollapsed)}
             variant="transparent"
             size="none"
-            className="p-2 mr-2"
+            className="mr-2 p-2"
           >
-            <ChevronLeft className="w-5 h-5 " />
+            <ChevronLeft className="h-5 w-5" />
           </Button>
         </div>
       )}
       {!isCollapsed && (
         <>
-          <Separator className="mb-8 border-aligno-400/50 border-t-[0.5px] border-solid" />
+          <Separator className="mb-8 border-t-[0.5px] border-solid border-aligno-400/50" />
           {/* 選單連結 */}
           {links.map((link) => (
             <SideLink
@@ -118,11 +118,11 @@ const SideItem = ({ workspace, workspaces }: SidebarClientProps) => {
       )}
 
       {/* 看板區域 */}
-      <div className="flex flex-col gap-4 mt-8">
+      <div className="mt-8 flex flex-col gap-4">
         <div className="flex items-center justify-between px-2">
           {!isCollapsed && (
             <>
-              <h3 className="text-sm px-2">你的看板</h3>
+              <h3 className="px-2 text-sm">你的看板</h3>
               <FormPopover sideOffset={5} side="bottom" workspaces={workspaces}>
                 <Plus className="h-4 w-4 cursor-pointer" />
               </FormPopover>
@@ -144,7 +144,7 @@ const SideItem = ({ workspace, workspaces }: SidebarClientProps) => {
                   />
                 ))
               : !isCollapsed && (
-                  <p className="text-sm text-aligno-300 px-2">尚無看板</p>
+                  <p className="px-2 text-sm text-aligno-300">尚無看板</p>
                 )}
           </div>
         )}

@@ -6,7 +6,7 @@ const Spinner = () => {
       alt="spinner"
       width={20}
       height={20}
-      className="flex justify-center "
+      className="flex justify-center"
     />
   );
 };

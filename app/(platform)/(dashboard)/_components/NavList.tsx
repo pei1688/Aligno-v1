@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-import { ChevronDown, Plus } from "lucide-react";
+import { Plus } from "lucide-react";
 import Image from "next/image";
 import FormPopover from "@/components/form/Form-Popover";
 import UserProfile from "./UserProfile";
@@ -9,7 +9,6 @@ import { Suspense } from "react";
 import NavWorkspace from "./NavWorkspace";
 import NavFavoriteItem from "./NavFavoriteItem";
 import Spinner from "@/components/Spinner";
-import NavMobile from "./NavMobile";
 
 interface WorkspaceProps {
   id: string;
@@ -44,36 +43,36 @@ const NavList = ({
   favorBoards: favorBoardsProps[];
 }) => {
   return (
-    <div className="flex justify-between items-center w-full">
-      <div className="flex justify-center items-center gap-6 sm:gap-8 ">
-        <Link href="/workspace" className="text-xl flex items-center gap-4">
+    <div className="flex w-full items-center justify-between">
+      <div className="flex items-center justify-center gap-6 sm:gap-8">
+        <Link href="/workspace" className="flex items-center gap-4 text-xl">
           <div className="relative h-[20px] w-[40px]">
             <Image
               src={"/logo.svg"}
               alt="logo"
-              className="object-cover rounded-md"
+              className="rounded-md object-cover"
               fill
               priority
             />
           </div>
-          <h1 className="font-semibold sm:flex hidden text-md">ALIGNO</h1>
+          <h1 className="text-md hidden font-semibold sm:flex">ALIGNO</h1>
         </Link>
         {/*工作區*/}
         <NavWorkspace workspaces={workspaces} />
         {/*已標上星號*/}
-          <Suspense fallback={<Spinner />}>
-            <NavFavoriteItem favorBoards={favorBoards} />
-          </Suspense>
+        <Suspense fallback={<Spinner />}>
+          <NavFavoriteItem favorBoards={favorBoards} />
+        </Suspense>
 
         {/*建立看板*/}
         <FormPopover sideOffset={5} side="bottom" workspaces={workspaces}>
-          <div className="text-sm cursor-pointer bg-aligno-600 px-2 p-1 sm:p-1 rounded-sm hover:bg-aligno-500 border-2 border-focusInput">
-            <span className="sm:block hidden">建立新的看板</span>
-            <Plus className="h-4 w-4 sm:hidden block" />
+          <div className="cursor-pointer rounded-sm border-2 border-focusInput bg-aligno-600 p-1 px-2 text-sm hover:bg-aligno-500 sm:p-1">
+            <span className="hidden sm:block">建立新的看板</span>
+            <Plus className="block h-4 w-4 sm:hidden" />
           </div>
         </FormPopover>
       </div>
-      <div className="flex gap-4 items-center">
+      <div className="flex items-center gap-4">
         <UserProfile user={user} />
       </div>
     </div>

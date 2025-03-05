@@ -26,10 +26,10 @@ const CreateBoard = ({
     >
       <div
         role="button"
-        className="aspect-video h-[100px] size-full bg-aligno-600 rounded-lg flex flex-col gap-y-1 items-center justify-center hover:opacity-75 transition text-aligno-200/70 shadow-lg"
+        className="flex aspect-video size-full h-[100px] flex-col items-center justify-center gap-y-1 rounded-lg bg-aligno-600 text-aligno-200/70 shadow-lg transition hover:opacity-75"
       >
         <p className="text-xs">建立新的看板</p>
-        <p className="text-xs mt-2 text-orange-300 font-semibold">
+        <p className="mt-2 text-xs font-semibold text-orange-300">
           {isPremium
             ? "Premium"
             : `還可以擁有${MAX_FREE_BOARDS - availableCount}個免費工作區`}

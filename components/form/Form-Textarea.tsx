@@ -30,7 +30,7 @@ export const FormTextarea = forwardRef<HTMLTextAreaElement, FormTextareaProps>(
       labelClassName,
       ...props
     },
-    ref
+    ref,
   ) => {
     //解構register內部的
     const { ref: registerRef, ...rest } = register(id);
@@ -66,7 +66,7 @@ export const FormTextarea = forwardRef<HTMLTextAreaElement, FormTextareaProps>(
         <ErrorMessage errormessage={errormessage} />
       </div>
     );
-  }
+  },
 );
 
 FormTextarea.displayName = "FormTextarea";

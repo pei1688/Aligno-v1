@@ -52,7 +52,7 @@ const DeleteWorkspaceModal = () => {
           <DialogTitle>要刪除此工作區嗎？</DialogTitle>
         </DialogHeader>
         <DialogDescription />
-        <p className="font-semibold text-mb">
+        <p className="text-mb font-semibold">
           🔸輸入要刪除的工作區名稱
           <span className="text-red-500">「{workspace.title}」</span> 須知事項：
         </p>
@@ -67,12 +67,12 @@ const DeleteWorkspaceModal = () => {
           placeholder="輸入工作區名稱..."
           value={confirmTitle}
           onChange={(e) => setConfirmTitle(e.target.value)}
-          className="px-4 py-2 w-full border border-rose-500"
+          className="w-full border border-rose-500 px-4 py-2"
         />
         <Button
           onClick={handleDelete}
           disabled={isPending || confirmTitle !== workspace.title}
-          className="w-full bg-rose-500 text-white mt-2 disabled:cursor-not-allowed hover:bg-rose-400 justify-center"
+          className="mt-2 w-full justify-center bg-rose-500 text-white hover:bg-rose-400 disabled:cursor-not-allowed"
         >
           確認刪除
         </Button>

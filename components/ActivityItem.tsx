@@ -9,16 +9,16 @@ interface ActProps {
 
 const ActivityItem = ({ act }: ActProps) => {
   return (
-    <li className="flex items-center gap-x-2 space-y-4 ">
+    <li className="flex items-center gap-x-2 space-y-4">
       <Avatar className="h-6 w-6">
         <AvatarImage src={act.userImage} />
       </Avatar>
       <div className="flex flex-col space-y-0.5">
-        <p className="text-sm ">
-          <span className="font-semibold lowercase ">{act.userName}</span>
+        <p className="text-sm">
+          <span className="font-semibold lowercase">{act.userName}</span>
           {logMessage(act)}
         </p>
-        <p className="text-xs text-aligno-300/70 hover:underline cursor-pointer">
+        <p className="cursor-pointer text-xs text-aligno-300/70 hover:underline">
           {format(new Date(act.createdAt), "MMM d日, yyyy '於' a h:mm", {
             locale: zhTW,
           })}
