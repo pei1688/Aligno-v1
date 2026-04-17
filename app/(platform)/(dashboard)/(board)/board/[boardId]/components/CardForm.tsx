@@ -8,10 +8,9 @@ import { Input } from "@/components/ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Plus, X } from "lucide-react";
 import { useParams } from "next/navigation";
-import { forwardRef, KeyboardEventHandler, useRef, useTransition } from "react";
+import React, { forwardRef, KeyboardEventHandler, useCallback, useEffect, useRef, useTransition } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
-import { useEventListener, useOnClickOutside } from "usehooks-ts";
 
 interface CardFormProps {
   listId: string;
@@ -64,14 +63,25 @@ export const CardForm = forwardRef<HTMLTextAreaElement, CardFormProps>(
       });
     };
 
-    const onKeyDown = (e: KeyboardEvent) => {
+    const onKeyDown = useCallback((e: KeyboardEvent) => {
       if (e.key === "Escape") {
         disableEditing();
       }
-    };
+    }, [disableEditing]);
 
-    useOnClickOutside(formRef, disableEditing);
-    useEventListener("keydown", onKeyDown);
+    useEffect(() => {
+      const handleClickOutside = (e: MouseEvent) => {
+        if (formRef.current && !formRef.current.contains(e.target as Node)) {
+          disableEditing();
+        }
+      };
+      document.addEventListener("mousedown", handleClickOutside);
+      document.addEventListener("keydown", onKeyDown);
+      return () => {
+        document.removeEventListener("mousedown", handleClickOutside);
+        document.removeEventListener("keydown", onKeyDown);
+      };
+    }, [disableEditing, onKeyDown]);
 
     const textKeyDown: KeyboardEventHandler<HTMLTextAreaElement> = (e) => {
       if (e.key === "Enter" && !e.shiftKey) {

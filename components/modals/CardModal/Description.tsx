@@ -11,10 +11,9 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useQueryClient } from "@tanstack/react-query";
 import { Text } from "lucide-react";
 import { useParams } from "next/navigation";
-import { useRef, useState, useTransition } from "react";
+import { useCallback, useEffect, useRef, useState, useTransition } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
-import { useEventListener, useOnClickOutside } from "usehooks-ts";
 
 interface DescriptionProps {
   card: CardWithList;
@@ -50,13 +49,23 @@ const Description = ({ card }: DescriptionProps) => {
     setIsEditing(false);
   };
 
-  const onKeyDown = (e: KeyboardEvent) => {
-    if (e.key === "Escape") {
-      disableEditing();
-    }
-  };
-  useEventListener("keydown", onKeyDown);
-  useOnClickOutside(formRef, disableEditing);
+  const onKeyDown = useCallback((e: KeyboardEvent) => {
+    if (e.key === "Escape") disableEditing();
+  }, [disableEditing]);
+
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (formRef.current && !formRef.current.contains(e.target as Node)) {
+        disableEditing();
+      }
+    };
+    document.addEventListener("keydown", onKeyDown);
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("keydown", onKeyDown);
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [onKeyDown, disableEditing]);
 
   const onSubmit = async (data: {
     description: string;

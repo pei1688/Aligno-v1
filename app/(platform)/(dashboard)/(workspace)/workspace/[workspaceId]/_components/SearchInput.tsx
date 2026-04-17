@@ -3,8 +3,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Search, X } from "lucide-react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
-import { useDebounceCallback } from "usehooks-ts";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 const SearchInput = () => {
   const searchParams = useSearchParams();
@@ -19,16 +18,20 @@ const SearchInput = () => {
     setSearchValue(searchParams.get("board") || "");
   }, [searchParams]);
 
-  const handleSearch = (value: string) => {
-    const params = new URLSearchParams(searchParams);
-    if (value) {
-      params.set("board", value);
-    } else {
-      params.delete("board");
-    }
-    router.replace(`${pathName}?${params.toString()}`);
-  };
-  const debounceSearch = useDebounceCallback(handleSearch);
+  const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const debounceSearch = useCallback((value: string) => {
+    if (timerRef.current) clearTimeout(timerRef.current);
+    timerRef.current = setTimeout(() => {
+      const params = new URLSearchParams(searchParams);
+      if (value) {
+        params.set("board", value);
+      } else {
+        params.delete("board");
+      }
+      router.replace(`${pathName}?${params.toString()}`);
+    }, 500);
+  }, [searchParams, pathName, router]);
 
   const clearSearch = () => {
     setSearchValue("");

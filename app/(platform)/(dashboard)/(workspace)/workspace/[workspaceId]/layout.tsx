@@ -6,10 +6,11 @@ import Sidebar from "./_components/sidebar/SideBar";
 export async function generateMetadata({
   params,
 }: {
-  params: { workspaceId: string };
+  params: Promise<{ workspaceId: string }>;
 }) {
+  const { workspaceId } = await params;
   const workspace = await db.workspace.findUnique({
-    where: { id: params.workspaceId },
+    where: { id: workspaceId },
   });
 
   return {
@@ -22,12 +23,13 @@ const WorkspaceIdLayout = async ({
   params,
 }: {
   children: React.ReactNode;
-  params: { workspaceId: string };
+  params: Promise<{ workspaceId: string }>;
 }) => {
+  const { workspaceId } = await params;
   return (
     <div className="flex w-full min-h-[calc(100vh-10rem)] sm:h-full overflow-hidden">
       <div className="flex-shrink-0 ">
-        <Sidebar workspaceId={params.workspaceId} />
+        <Sidebar workspaceId={workspaceId} />
       </div>
       <div className="flex-1 min-w-0 overflow-x-auto">{children}</div>
     </div>

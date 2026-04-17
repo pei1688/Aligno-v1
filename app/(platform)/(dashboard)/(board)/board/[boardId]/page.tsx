@@ -1,16 +1,17 @@
 import db from "@/lib/db";
-import ListContainer from "./_components/ListContainer";
+import ListContainer from "./components/ListContainer";
 
 interface BoardIdProps {
-  params: {
+  params: Promise<{
     boardId: string;
-  };
+  }>;
 }
 
 const BoardIdPage = async ({ params }: BoardIdProps) => {
+  const { boardId } = await params;
   const lists = await db.list.findMany({
     where: {
-      boardId: params.boardId,
+      boardId,
     },
     include: {
       cards: {
@@ -25,8 +26,8 @@ const BoardIdPage = async ({ params }: BoardIdProps) => {
   });
 
   return (
-    <div className="p-4 min-h-[calc(100vh-10rem)] sm:h-full overflow-y-auto">
-      <ListContainer boardId={params.boardId} lists={lists} />
+    <div className="min-h-[calc(100vh-10rem)] overflow-y-auto p-4 sm:h-full">
+      <ListContainer boardId={boardId} lists={lists} />
     </div>
   );
 };

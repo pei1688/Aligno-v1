@@ -9,10 +9,11 @@ import { subscription } from "@/lib/subscription";
 const ActivityPage = async ({
   params,
 }: {
-  params: { workspaceId: string };
+  params: Promise<{ workspaceId: string }>;
 }) => {
+  const { workspaceId } = await params;
   const workspace = await db.workspace.findUnique({
-    where: { id: params.workspaceId },
+    where: { id: workspaceId },
   });
 
   if (!workspace) {
@@ -23,12 +24,12 @@ const ActivityPage = async ({
     <div className="w-full max-w-[1200px] mx-auto px-4 mt-8">
       <div className="w-full lg:w-[300px]">
         <Suspense fallback={<Spinner />}>
-          <WorkspaceInfo workspaceId={params.workspaceId} />
+          <WorkspaceInfo workspaceId={workspaceId} />
         </Suspense>
       </div>
       <Separator className="mt-16 mb-8 border-white/30 border-t-[0.5px] border-solid" />
       <Suspense fallback={<Spinner />}>
-        <ActivityList workspaceId={params.workspaceId} />
+        <ActivityList workspaceId={workspaceId} />
       </Suspense>
     </div>
   );

@@ -3,10 +3,9 @@ import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import { ENTITY_TYPE } from "@prisma/client";
 import { NextResponse } from "next/server";
 
-
 export async function GET(
   request: Request,
-  { params }: { params: { cardId: string } }
+  { params }: { params: Promise<{ cardId: string }> },
 ) {
   try {
     // 驗證用戶
@@ -14,7 +13,7 @@ export async function GET(
     const user = await getUser();
     if (!user) return new NextResponse("沒有權限", { status: 401 });
 
-    const { cardId } = params;
+    const { cardId } = await params;
 
     // 透過 `include` 一次取得 Card + WorkspaceId，減少請求數量
     const card = await db.card.findUnique({

@@ -4,7 +4,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { ChevronDown, Star } from "lucide-react";
-import FavorBoardItem from "../(workspace)/workspace/_components/FavorBoardItem";
+import FavorBoardItem from "../(workspace)/workspace/components/FavorBoardItem";
 
 export interface FavorBoardProps {
   id: string;

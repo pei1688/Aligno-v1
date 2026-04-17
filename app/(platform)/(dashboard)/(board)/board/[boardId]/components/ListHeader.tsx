@@ -5,10 +5,9 @@ import { UpdateListSchema } from "@/aciotns/list/updateList/schema";
 import { Input } from "@/components/ui/input";
 import { ListWithCards } from "@/lib/types";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useRef, useState, useTransition } from "react";
+import { useCallback, useEffect, useRef, useState, useTransition } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { toast } from "sonner";
-import { useEventListener } from "usehooks-ts";
 import ListOption from "./ListOption";
 import ErrorMessage from "@/components/form/Form-Error";
 import { FormInput } from "@/components/form/Form-Input";
@@ -75,13 +74,14 @@ const ListHeader = ({ list, onAddCard }: ListHeaderProps) => {
     });
   };
 
-  const onKeyDown = (e: KeyboardEvent) => {
-    if (e.key === "Escape") {
-      formRef.current?.requestSubmit();
-    }
-  };
+  const onKeyDown = useCallback((e: KeyboardEvent) => {
+    if (e.key === "Escape") formRef.current?.requestSubmit();
+  }, []);
 
-  useEventListener("keydown", onKeyDown);
+  useEffect(() => {
+    document.addEventListener("keydown", onKeyDown);
+    return () => document.removeEventListener("keydown", onKeyDown);
+  }, [onKeyDown]);
 
   return (
     <div className="text-sm font-semibold flex justify-between items-start gap-x-2">

@@ -18,11 +18,23 @@ export async function createWorkspace({ title }: { title: string }) {
     throw new Error("欄位格式錯誤");
   }
   try {
+    await db.user.upsert({
+      where: { id: user.id },
+      update: {},
+      create: {
+        id: user.id,
+        email: user.email ?? "",
+        firstName: user.given_name ?? "",
+        lastName: user.family_name ?? "",
+        profileImage: user.picture ?? null,
+      },
+    });
+
     const workspace = await db.workspace.create({
       data: {
         title: parsedData.data.title,
         user: {
-          connect: { id: user.id }, 
+          connect: { id: user.id },
         },
       },
     });

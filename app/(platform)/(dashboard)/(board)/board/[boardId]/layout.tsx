@@ -1,5 +1,5 @@
 import db from "@/lib/db";
-import BoardNavbar from "./_components/boardNavbar/BoardNavbar";
+import BoardNavbar from "./components/boardNavbar/BoardNavbar";
 import { notFound } from "next/navigation";
 import { startCase } from "lodash";
 import Sidebar from "../../../(workspace)/workspace/[workspaceId]/_components/sidebar/SideBar";
@@ -7,10 +7,11 @@ import Sidebar from "../../../(workspace)/workspace/[workspaceId]/_components/si
 export async function generateMetadata({
   params,
 }: {
-  params: { boardId: string };
+  params: Promise<{ boardId: string }>;
 }) {
+  const { boardId } = await params;
   const board = await db.board.findUnique({
-    where: { id: params.boardId },
+    where: { id: boardId },
   });
   return {
     title: startCase(board?.title || "Aligno"),
@@ -22,11 +23,12 @@ const BoardIdLayout = async ({
   params,
 }: {
   children: React.ReactNode;
-  params: { boardId: string };
+  params: Promise<{ boardId: string }>;
 }) => {
+  const { boardId } = await params;
   const board = await db.board.findUnique({
     where: {
-      id: params.boardId,
+      id: boardId,
     },
     select: {
       workspaceId: true,
@@ -42,7 +44,7 @@ const BoardIdLayout = async ({
   return (
     <div
       style={{ backgroundImage: `url(${board.imageFullUrl})` }}
-      className="relative h-full bg-no-repeat bg-cover bg-center"
+      className="relative h-full bg-cover bg-center bg-no-repeat"
     >
       <div className="absolute inset-0 bg-aligno-800/10" />
       {/* 主要內容*/}
@@ -52,7 +54,7 @@ const BoardIdLayout = async ({
           <Sidebar workspaceId={board.workspaceId} />
         </div>
         {/* 右側內容區域 */}
-        <div className="flex flex-col flex-1 min-w-0">
+        <div className="flex min-w-0 flex-1 flex-col">
           {/* BoardNavbar  */}
           <BoardNavbar
             title={board.title}
@@ -60,7 +62,7 @@ const BoardIdLayout = async ({
             workspaceId={board.workspaceId}
           />
           {/* 主要內容區域 */}
-          <main className=" mt-8 h-full">{children}</main>
+          <main className="mt-8 h-full">{children}</main>
         </div>
       </div>
     </div>

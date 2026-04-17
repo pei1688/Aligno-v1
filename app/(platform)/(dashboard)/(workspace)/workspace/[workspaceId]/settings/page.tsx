@@ -5,9 +5,10 @@ import SettingForm from "./_components/SettingForm";
 import { Suspense } from "react";
 import Spinner from "@/components/Spinner";
 
-const SettingPage = async ({ params }: { params: { workspaceId: string } }) => {
+const SettingPage = async ({ params }: { params: Promise<{ workspaceId: string }> }) => {
+  const { workspaceId } = await params;
   const workspace = await db.workspace.findUnique({
-    where: { id: params.workspaceId },
+    where: { id: workspaceId },
   });
 
   if (!workspace) {
@@ -20,7 +21,7 @@ const SettingPage = async ({ params }: { params: { workspaceId: string } }) => {
       <div className="w-full lg:w-[300px]">
         <Suspense fallback={<Spinner />}>
           <WorkspaceInfo
-            workspaceId={params.workspaceId}
+            workspaceId={workspaceId}
           />
         </Suspense>
       </div>

@@ -1,5 +1,5 @@
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
-import UserForm from "./_components/UserForm";
+import UserForm from "./components/UserForm";
 import db from "@/lib/db";
 import Image from "next/image";
 import { Separator } from "@/components/ui/separator";

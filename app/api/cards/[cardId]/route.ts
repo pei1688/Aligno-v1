@@ -4,8 +4,9 @@ import { NextResponse } from "next/server";
 
 export async function GET(
   req: Request,
-  { params }: { params: { cardId: string } }
+  { params }: { params: Promise<{ cardId: string }> },
 ) {
+  const { cardId } = await params;
   try {
     const { getUser } = getKindeServerSession();
     const user = await getUser();
@@ -13,7 +14,7 @@ export async function GET(
 
     const card = await db.card.findUnique({
       where: {
-        id: params.cardId,
+        id: cardId,
       },
       include: {
         list: {

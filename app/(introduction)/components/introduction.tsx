@@ -1,6 +1,6 @@
 "use client";
 
-import IntroCard from "./IntroCard";
+import IntroCard from "./intro-card";
 
 const features = [
   {
@@ -21,11 +21,11 @@ const features = [
 ];
 const Introduction = () => {
   return (
-    <div className="flex h-full w-full items-start justify-center">
-      <div className="w-full max-w-[1280px] px-16">
-        <div className="mt-4 flex w-full flex-col items-start gap-4 text-aligno-800">
+    <div className="my-12 flex h-full w-full items-start justify-center">
+      <div className="flex w-full max-w-[1280px] flex-col gap-6 px-16">
+        <div className="flex w-full flex-col items-start gap-4 text-aligno-800">
           <h2 className="text-3xl font-semibold">您的提升效率工具</h2>
-          <p className="mt-4 text-lg">
+          <p className="text-lg">
             Aligno 讓你的團隊協作更加順暢，專案管理更加輕鬆
           </p>
         </div>

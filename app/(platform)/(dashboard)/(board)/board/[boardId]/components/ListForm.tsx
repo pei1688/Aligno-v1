@@ -3,8 +3,7 @@
 import { Plus, X } from "lucide-react";
 import ListWrapper from "./ListWrapper";
 import SubmitButton from "@/components/SubmitButton";
-import { useState, useRef, useTransition } from "react";
-import { useEventListener, useOnClickOutside } from "usehooks-ts";
+import { useCallback, useEffect, useRef, useState, useTransition } from "react";
 import { Input } from "@/components/ui/input";
 import { useParams } from "next/navigation";
 import { Button } from "@/components/ui/button";
@@ -43,16 +42,23 @@ const ListForm = () => {
   const disableEditing = () => {
     setIsEditing(false);
   };
-  const onKeyDown = (e: KeyboardEvent) => {
-    if (e.key === "Escape") {
-      disableEditing();
-    }
-  };
+  const onKeyDown = useCallback((e: KeyboardEvent) => {
+    if (e.key === "Escape") disableEditing();
+  }, [disableEditing]);
 
-  // 監聽 Escape 鍵
-  useEventListener("keydown", onKeyDown);
-  // 點擊表單外部時關閉輸入框
-  useOnClickOutside(formRef, disableEditing);
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (formRef.current && !formRef.current.contains(e.target as Node)) {
+        disableEditing();
+      }
+    };
+    document.addEventListener("keydown", onKeyDown);
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("keydown", onKeyDown);
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [onKeyDown, disableEditing]);
 
   const onSubmit = async (data: { title: string; boardId: string }) => {
     const formData = new FormData();

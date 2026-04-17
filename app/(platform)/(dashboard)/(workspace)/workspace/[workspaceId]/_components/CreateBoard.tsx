@@ -1,7 +1,7 @@
 "use client";
 import FormPopover from "@/components/form/Form-Popover";
 import { Workspace } from "@prisma/client";
-import { useMediaQuery } from "usehooks-ts";
+import { useEffect, useState } from "react";
 
 interface CreateBoardProps {
   workspaces: Workspace[];
@@ -16,7 +16,14 @@ const CreateBoard = ({
   MAX_FREE_BOARDS,
   availableCount,
 }: CreateBoardProps) => {
-  const isMobile = useMediaQuery("(max-width: 768px)");
+  const [isMobile, setIsMobile] = useState(false);
+  useEffect(() => {
+    const mq = window.matchMedia("(max-width: 768px)");
+    setIsMobile(mq.matches);
+    const handler = (e: MediaQueryListEvent) => setIsMobile(e.matches);
+    mq.addEventListener("change", handler);
+    return () => mq.removeEventListener("change", handler);
+  }, []);
 
   return (
     <FormPopover
