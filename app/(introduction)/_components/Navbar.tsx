@@ -9,19 +9,23 @@ const Navbar = () => {
   const { user } = useKindeBrowserClient();
 
   return (
-    <nav className="flex h-[3rem] w-full items-center justify-between bg-aligno-600 px-8 shadow-lg md:px-16 ">
-      <Link href="/" className="flex items-center gap-4 text-2xl">
-        <Image src={"/logo.svg"} alt="logo" width={35} height={35} />
-        <h1 className="font-semibold">ALIGNO</h1>
+    <nav className="flex h-[3rem] w-full items-center justify-between border-b border-gray-100 bg-white px-8 md:px-16">
+      <Link href="/" className="flex items-center gap-3 text-xl">
+        <Image src={"/logo.svg"} alt="logo" width={28} height={28} />
+        <span className="font-semibold text-aligno-800">ALIGNO</span>
       </Link>
       {user ? (
         <Link href={"/workspace"}>
-          <Button variant="transparent" className="bg-aligno-500">
+          <Button className="bg-aligno-800 text-white hover:bg-aligno-600 transition-colors">
             前往您的工作區
           </Button>
         </Link>
       ) : (
-        <Button asChild variant="transparent">
+        <Button
+          asChild
+          variant="outline"
+          className="border-aligno-600 text-aligno-700 hover:bg-gray-50 transition-colors"
+        >
           <LoginLink>登入</LoginLink>
         </Button>
       )}
