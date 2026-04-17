@@ -9,17 +9,12 @@ export const metadata = {
 
 export default async function Home() {
   return (
-    <div className="flex min-h-[calc(100vh-3rem)] w-full flex-col bg-neutral-300">
-      <div className="flex h-full w-full justify-center text-neutral-800">
-        <div className="w-full max-w-[1280px] px-8">
-          <div className="flex flex-col lg:flex-row lg:gap-8">
-            <Heading />
-            <Hero />
-          </div>
-        </div>
+    <div className="flex min-h-[calc(100vh-3rem)] w-full flex-col bg-white">
+      <div className="flex w-full flex-col items-center">
+        <Heading />
+        <Hero />
       </div>
       <Introduction />
-      <hr className="border-aligno-300" />
       <Footer />
     </div>
   );
